@@ -1,0 +1,3 @@
+
+Use POST to create a new session 
+A new operator code is created if none is specified

@@ -1,0 +1,6 @@
+
+Uses POST results to validate a session.
+
+Displays an error if there was a problem
+
+Redirects back to ListSessions.php

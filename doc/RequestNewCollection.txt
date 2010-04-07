@@ -1,0 +1,6 @@
+
+Web Form is at RequestNewCollection.html
+
+The POST results are are emailed to the web administrator.
+
+A link back to the webform is included. 

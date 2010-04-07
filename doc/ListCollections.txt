@@ -1,0 +1,3 @@
+
+Stateless
+Use GET to list all collections

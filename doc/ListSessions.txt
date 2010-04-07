@@ -1,0 +1,9 @@
+
+Stateless
+Use GET to list all sessions
+
+If the operator code is specified then validateSession is available
+HideValidate will hide the validateSession buttons 
+
+There are buttons to CopySession
+Session is opened via customised script

@@ -1,0 +1,4 @@
+
+Uses POST results to copy a session
+
+Redirects back to ListSessions.php
