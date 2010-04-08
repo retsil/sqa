@@ -1,0 +1,152 @@
+	H1.sqa {
+		display:none;
+	}
+    div.sqah1 {
+				background: url('icons/softwarequalityassurace.png');
+				width: 747px;
+				height: 39px;
+				margin: 15px;
+				padding: 0px;
+	}
+	div.sqap {
+                font: normal .9em arial, sans-serif;
+				margin-bottom: 1em;
+				border: 0;
+	}
+    H2.sqa {
+                background: url('icons/blueTitleMiddle.png') repeat-x;
+                color: #001151;
+                font: bold 14px arial, sans-serif;
+                min-height: 30px;
+                padding: 8px;
+				margin: 2px;
+				border: 0;
+
+        }
+        LEGEND.sqaf {
+                background-color: #001181;
+                color:#e0e0ff;
+                font: bold 1em arial, sans-serif;
+        }
+	FIELDSET.sqaf {
+                display: block;
+                clear: both;
+                margin: 10px;
+		width: 300pt;
+                background-color: #e0e0f0;
+                font: normal .9em arial, sans-serif;
+	}
+        TABLE.list {
+                margin: 10px;
+                background-color: #e0e0f0;
+                font: normal .9em arial, sans-serif;
+	}
+        TH.list {
+                background-color: #001181;
+                padding: 0;
+                margin: 0;
+               color:#e0e0ff;
+                font: bold 1em arial, sans-serif;
+        }
+        TD.list {
+                padding: 0;
+                margin: 0;
+               color:#000000;
+                font: normal 1em arial, sans-serif;
+        }
+        TABLE.results {
+                margin: 10px;
+                background-color: #e0e0f0;
+                font: normal .9em arial, sans-serif;
+	}
+        TH.results {
+border: thin solid grey; 
+    background-color: #001181;
+                padding: 0.3em;
+                margin: 0;
+               color:#e0e0ff;
+                font: bold 1em arial, sans-serif;
+        }
+        TD.results {
+    border: thin solid grey; 
+    padding: 0.3em;
+                margin: 0;
+               color:#000000;
+                font: normal 1em arial, sans-serif;
+        }
+	DIV.sqaf {
+                display: block;
+                clear: both;
+		text-align: left;
+		min-width: 200pt;
+                font: normal .9em arial, sans-serif;
+	}
+	button.sqaop {
+                font-size: 12pt;
+                font-weight: normal;
+                font-face: arial;
+                font: normal .9em arial, sans-serif;
+	}
+	SPAN.sqaerr {
+				display: inline;
+	border: solid thin gray;
+               color:#FF0000;
+                background-color: #FFFFFF;
+
+                font-size: 12pt;
+                font-weight: normal;
+                font-face: arial;
+                font: normal .9em arial, sans-serif;
+	}
+		SPAN.sqaop {
+	border: solid thin gray;
+               color:#000000;
+                background-color: #FFFFFF;
+
+                font-size: 12pt;
+                font-weight: normal;
+                font-face: arial;
+                font: normal .9em arial, sans-serif;
+	}
+        BUTTON.list {
+                font: normal .9em arial, sans-serif;
+        }
+        FORM.list {
+	        display: inline;
+                margin: 0;
+                padding: 0;
+                border: 0;
+                font: normal .9em arial, sans-serif;
+        }
+		span.sqamenusel {
+				padding: .2em;
+				display: inline;
+                border: solid 2px #e0e0ff;
+                background-color: #001181;
+                color:#e0e0ff;
+                font: normal 1em arial, sans-serif;
+
+        }
+		      div.sqamenu {
+		
+			        float: right;
+			}
+		       span.sqamenu {
+				padding: .2em;
+				display: inline;
+                border: solid 2px #e0e0ff;
+                background-color: #ffffff;
+                color:#0000ff;
+                font: normal 1em arial, sans-serif;
+
+        }
+        span.sqaopf {
+	padding: .2em;
+	        display: inline;
+                border: solid 2px #e0e0ff;
+                background-color: #001181;
+                color:#e0e0ff;
+                font: normal 1em arial, sans-serif;
+
+        }
+		
