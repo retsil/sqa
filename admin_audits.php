@@ -27,8 +27,6 @@ require_once('moodle.inc');
 
 
 <?php 
-    echo "Username is: " . $USER->username;
-    echo "Moodle id is: " . $USER->id;
 
    if (isloggedin() && $USER->username != 'guest') {
      $moodle_full_name = $USER->firstname . " " . $USER->lastname;
@@ -39,8 +37,9 @@ require_once('moodle.inc');
      echo "</span> <a href=\"" . $CFG->wwwroot . "/login/logout.php\">Logout</a></p>";
 #	echo "Your ID is: " . $USER->id . "</p>";
    } else {
-     echo "<p>Login below and hit <a href=\"admin_audits.php\">refresh</a></p>";
-     echo "<iframe width=100% height=60% src=\"" . $CFG->wwwroot . "/login/index.php\"></iframe>";
+     echo "<p>Please follow this <a href='" . $CFG->wwwroot . "/mod/resource/view.php?id=83'>link</a> and log into moodle</p>";
+#     echo "<p>Login below and hit <a href=\"admin_audits.php\">refresh</a></p>";
+#     echo "<iframe width=100% height=60% src=\"" . $CFG->wwwroot . "/login/index.php\"></iframe>";
      echo "</body></html>";
      return;
    }

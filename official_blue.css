@@ -36,7 +36,21 @@
                 background-color: #e0e0f0;
                 font: normal .9em arial, sans-serif;
 	}
-        TABLE.list {
+	div.results {
+                display: block;
+                clear: both;
+                margin: 10px;
+                padding: 0.3em;
+		border: thin solid grey; 
+ 		width: 600pt;
+                background-color: #e0e0f0;
+                font: normal .9em arial, sans-serif;
+	}
+ 	h3.results {
+                color: #001181;
+                font: bold 1em arial, sans-serif;
+ 	}
+       TABLE.list {
                 margin: 10px;
                 background-color: #e0e0f0;
                 font: normal .9em arial, sans-serif;
@@ -55,6 +69,7 @@
                 font: normal 1em arial, sans-serif;
         }
         TABLE.results {
+	       float: left;
                 margin: 10px;
                 background-color: #e0e0f0;
                 font: normal .9em arial, sans-serif;
@@ -69,6 +84,14 @@ border: thin solid grey;
         }
         TD.results {
     border: thin solid grey; 
+    padding: 0.3em;
+                margin: 0;
+               color:#000000;
+                font: normal 1em arial, sans-serif;
+        }
+        TD.myresults {
+    border: thin solid grey; 
+    background-color: #FFFFFF;
     padding: 0.3em;
                 margin: 0;
                color:#000000;

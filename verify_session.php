@@ -2,14 +2,22 @@
 
 require_once('settings.php');
 
+require_once('moodle.inc');
+
+ if (isloggedin() && $USER->username != 'guest') {
+     $moodle_id = $USER->id;
+ } else {
+   die("Not logged in");
+ }
+
 $link = mysql_connect($db_server,$db_username,$db_password);
 if (! mysql_select_db($db_database)) {
   die(mysql_error());
 }
 
-if (preg_match('/^\d+$/', $_POST['collection_id']) and (!empty( $_POST['password'])) and preg_match('/^\d+$/', $_POST['session_id'])) {
+if (preg_match('/^\d+$/', $_POST['collection_id']) and preg_match('/^\d+$/', $_POST['session_id'])) {
     
-  $query = sprintf('SELECT collection.collection_id, password, session_id FROM collection, session WHERE session.collection_id=collection.collection_id AND session.session_id=%d AND collection.collection_id=%d AND password="%s"', $_POST['session_id'],$_POST['collection_id'], $_POST['password']);
+  $query = sprintf('SELECT collection.collection_id, password, session_id FROM collection, session, institution_auth WHERE session.collection_id=collection.collection_id AND session.session_id=%d AND collection.collection_id=%d AND collection.institution_id=institution_auth.institution_id AND moodle_id=%d', $_POST['session_id'],$_POST['collection_id'], $USER->id);
  $result = mysql_query($query);
     if (!$result) {
       $message  = 'Invalid query: ' . mysql_error() . "\n";
@@ -18,10 +26,9 @@ if (preg_match('/^\d+$/', $_POST['collection_id']) and (!empty( $_POST['password
     }
     if ($row = mysql_fetch_assoc($result)) {
       $collection_id =  $row['collection_id'];
-      $password =  $row['password'];
       $session_id =  $row['session_id'];
    } else {
-      die('Session not found');
+      die('Session not found: ' . $query);
     }
  } else {
   die('Session not specified');
