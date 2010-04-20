@@ -28,11 +28,11 @@ $session_id = check_session(-1);
 function column_range($table, $column, $collection_id) { 
 	  $stats = array();
 
-	  $query = sprintf('SELECT max(%s) AS max, min(%s) AS min FROM %s, session WHERE is_valid=1 AND session.session_id=muga_data.session_id AND session.collection_id=%d', $column, $column, $table, $collection_id);
+	  $query = sprintf('SELECT avg(%s) AS avg, stddev(%s) AS stddev, max(%s) AS max, min(%s) AS min FROM %s, session WHERE is_valid=1 AND session.session_id=muga_data.session_id AND session.collection_id=%d', $column, $column, $column, $column, $table, $collection_id);
 	  $result = my_query($query);
 	  $row = mysql_fetch_assoc($result);
-	  $stats['min'] = $row['min'];
-	  $stats['max'] = $row['max'];
+	  $stats['min'] = $row['min'] - $row['stddev'];
+	  $stats['max'] = $row['max'] + $row['stddev'];
 	  return $stats;
 }
 
@@ -229,7 +229,7 @@ foreach ($field_labels as $field => $label) {
   $column_range = column_range('muga_data', $field_sql[$field], $collection_id);
   $column_scale = 
     'chds=' . $column_range['min'] . ',' . $column_range['max'] . "&amp;". 
-    'chxr=0,' . $column_range['min'] . ',' . $column_range['max'];
+    'chxr=1,' . $column_range['min'] . ',' . $column_range['max'];
 
   $chart_series = array();
   $chart_series[0] = '-1,' . implode(',',$field_min[$field]) . ',-1';
@@ -241,7 +241,10 @@ foreach ($field_labels as $field => $label) {
 #  $chart_data[4] = implode(',',$field_value[$field]);
   $chart_data = implode('|',$chart_series);
 #  echo "<hr><img width='400' height='150' src='http://www.google.com/chart?chs=400x125&amp;cht=lc&amp;chd=t0:" . $chart_data . "&amp;chm=F,0000FF,0,1:" . $row_i . ",20' ALT='Google chart'>";
-    echo "<img width='900' height='200' src='http://chart.apis.google.com/chart?chs=900x200&amp;cht=ls&amp;chd=t0:" . $chart_data . "&amp;chm=F,FF9900,0,1:" . $nstudies . ",40|H,0CBF0B,0,1:" . $nstudies . ",1:20|H,000000,4,1:" . $nstudies . ",1:40|H,0000FF,3,1:" . $nstudies . ",1:20|o,FF0000,5,1:" . $nstudies . ",5&amp;chxt=y&amp;&amp;chxt=y&amp;" . $column_scale . "&amp;chdl=Max+Value|Standard Deviation (25%-75%)|Mean|Min+Value|Your value&amp;chco=0000FF,FF9900,000000,0CBF0B,FF0000'>";
+    echo "<img width='900' height='300' src='http://chart.apis.google.com/chart?chs=900x300&amp;cht=ls&amp;chd=t0:" . $chart_data . "&amp;chm=F,FF9900,0,1:" . $nstudies . ",40|H,0CBF0B,0,1:" . $nstudies . ",1:20|H,000000,4,1:" . $nstudies . ",1:40|H,0000FF,3,1:" . $nstudies . ",1:20|o,FF0000,5,1:" . $nstudies . ",5&amp;chxt=x,y&amp;" . $column_scale . "&amp;chdl=Mean|1 Standard Deviation|Max+Value|Min+Value|Your value&amp;chco=000000,FF9900,0000FF,0CBF0B,FF0000&amp;chxl=0:||1|2|3|4|5|6|7|8|9|10|11|12|&amp;chg=100,10'>";
+
+#chxt=x,y
+#chxl=0:|2001|2002|2003
 
 # "chm=o,FF0000,5,1:" . $nstudies . ",5&amp;"
     # chm=o,FF0000,5,,5|
