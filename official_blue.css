@@ -23,6 +23,9 @@
 				border: 0;
 
         }
+        dt.sqap {
+                font-weight: bold;
+        }
         LEGEND.sqaf {
                 background-color: #001181;
                 color:#e0e0ff;

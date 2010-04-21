@@ -45,7 +45,7 @@ if ( $operator_code_error != '') {
 
 <h2 class="sqa">New operator</h2>
 
-<div class="sqap">Check in as a new operator. Do this if you don&#39;t have an operator code. Remebering your operator code is important for some audits. You may enter your details below if you want to. Your deails are kept for recovery purposes only.
+  <div class="sqap">Check in as a new operator. (ie. if you don&#39;t have an operator code). Remembering your operator code is important for some audits. You may enter your details below if you want to. Your details are kept for recovery purposes only.
 </div>
 
 <FORM action="new_operator.php" METHOD="POST">

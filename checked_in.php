@@ -61,6 +61,8 @@ if (empty( $operator_id)) {
   <form action="checked_out.php"><span class="sqaopf">Operator code: <span class="sqaop"><?php echo $operator_code; ?></span>
 	  <button type="submit">Check out</button></span></form>
 
+<p>On first using this online audit tool, register below for one of the available audits.  This will open a Session, which you can come back to at a later date (without having to re-register).</p>
+
 <p>A list of currently active sessions for entering audit data</p>
 
 <table class="list" width="80%">

@@ -26,18 +26,21 @@ if (! mysql_select_db($db_database)) {
   <div class="sqah1">&nbsp;</div>
 
 <h2 class="sqa">Welcome</h2>
-<div class="sqap">Welcome to the ANZSNM software quality assurance site.
-This site allows you to participate and administrate web based software audits. Each audit requies participants to download a dataset and process it with their workstation software.</div>
+<div class="sqap">Welcome to the ANZSNM software quality assurance site. This site allows you to participate in an existing, or administrate a new web based software audits. Each audit requires participants to download a dataset and process it using their workstation software.</div>
 
 <h2 class="sqa">Participate</h2>
-<div class="sqap">You can participate by registering with a software audit.
-You will be able to measure the performance of your software in comparison to other participants in the audit. </div>
+<div class="sqap">You participate by registering with a software audit, when you will receive a unique <em>operator code</em>. You can use this code across multiple audits. The audits can be used for (1) official audits or (2) training. 
+</div>
 
-<div class="sqap">When you participate you will receive an <em>operator code</em>. This is a code which is unique to you. You can use this code across multiple audits.</div>
+<dl class="sqap">
+<dt class="sqap">Official Audits</dt>
+<dd class="sqap">To participate in an official software audit you need to contact the person running the audit and give them your operator code so that your results are validated and included (this can be done before or after data entry).</dd>
+<dt class="sqap">Training</dt>
+<dd class="sqap">
+You can use the training datasets to compare your results to the mean value stored in the database for each patient study (obtained from a previous audit).</dd>
+</dl>
 
-<div class="sqap">You may be decide to participate in an official software audit, in which case you will need to contact the person running the audit and give them your operator code so that your results are validated and included.</div>
-
-	  <div class="sqap">Each audit is identified by its <em>scope</em>, <em>insitution</em> and <em>dataset</em>. In some cases the scope may be restricted to certain countries, regions, states or even individual hospitals. You may participate in any audit, regardless of the scope. However, the person running the audit has the authority to either include or exclude your results.</div>
+	  <div class="sqap">Each audit is identified by its <em>scope, institution and dataset</em>. In some cases the scope may be restricted to certain countries, regions, states or even individual hospitals. You may participate in any audit, regardless of the scope. However, the person running the audit has the authority to either include or exclude your results.</div>
 
 <h2 class="sqa">Administrate</h2>
 
@@ -76,10 +79,8 @@ mysql_free_result($result);
 ?>
 </table>
 
-<div class="sqap">You can choose the scope of your collection and then invite other people to participate. You may need to demonstrate that you will handle the audit data responsibly</div>
-
-<div class="sqap">Please avoid requesting new audits which have the same scope as existing audits. Here is a list of existing web based software audits.
-</div>
+<div class="sqap">You can choose the scope of your collection and then invite other people to participate. You may need to demonstrate that you will handle the audit data responsibly.</div>
+<div class="sqap">Please avoid requesting new audits which have the same scope as existing audits. Here is a list of existing web based software audits. </div>
 
 
 <table class="list" width="80%">
@@ -116,7 +117,7 @@ mysql_free_result($result);
 ?>
 </table>
 
-<div class="sqap">Results and reports are not publicly available.</div>
+<div class="sqap">Individual results are not publicly available on this site and the dissemination of results remains the responsibility of the administrator of the audit.</div>
 
 </body>
 </html>
