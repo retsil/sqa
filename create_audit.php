@@ -87,3 +87,4 @@ $query = sprintf('insert into collection (scope,start_date,end_date,module_id,in
 header("Location: " . $sqa_www_root . "/admin_audits.php");
 
 ?>
+

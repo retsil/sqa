@@ -56,12 +56,14 @@ if (empty( $operator_id)) {
 <h1 class="sqa">Software Quality Assurance</h1>
   <div class="sqah1">&nbsp;</div>
 
-<h2 class="sqa">Sessions</h2>
+<h2 class="sqa">Operator Code</h2>
 
   <form action="checked_out.php"><span class="sqaopf">Operator code: <span class="sqaop"><?php echo $operator_code; ?></span>
 	  <button type="submit">Check out</button></span></form>
 
 <p>On first using this online audit tool, register below for one of the available audits.  This will open a Session, which you can come back to at a later date (without having to re-register).</p>
+
+<h2 class="sqa">Sessions</h2>
 
 <p>A list of currently active sessions for entering audit data</p>
 

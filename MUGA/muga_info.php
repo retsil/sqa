@@ -26,8 +26,24 @@ if (! mysql_select_db($db_database)) {
 <h1 class="sqa">Software Quality Assurance</h1>
   <div class="sqah1">&nbsp;</div>
 
-<h2 class="sqa">The MUGA Scan</h2>
-<div class="sqap">Some information here</div>
+<h2 class="sqa">The MUGA Audit</h2>
+<div class="sqap">
+  This data was obtained from the Institute of Physics and Engineering in Medicine (IPEM) Nuclear Medicine Software Working Party.
+</div>
+<div class="sqap">
+
+The download below contains the data for the MUGA audit.  The data are in compressed form as a single file.  They have been compressed using pkzip.
+</div>
+
+<div class="sqap">
+<a href="muga-interfile-data.zip">Download</a>
+</div>
+
+<div class="sqap">
+The download contains 12 MUGA studies in interfile 3.3 format containing separate header and data files.  The header and data file names are p1muga.hdr, p1muga.img, p2muga.hdr etc.
+the patient IDs are PATIENT_M1, PATIENT_M2 etc.  Each file consists of 32 frames of matrix size 64*64. 
+As a check that the files are reading correctly the maximum count in the first frame of the first subject should be  93 .
+</div>
 
 </body>
 </html>

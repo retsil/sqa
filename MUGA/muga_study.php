@@ -1,5 +1,3 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-    "http://www.w3.org/TR/html4/loose.dtd">
 <?php
 
 require_once('../settings.php');
@@ -65,7 +63,8 @@ if (empty( $study_id)) {
  }
 
 ?>
-
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+    "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
    	<style type="text/css" title="currentStyle" media="screen">
@@ -80,6 +79,7 @@ if (empty( $study_id)) {
   <LEGEND class="sqaf">Results of Analysis</LEGEND>
 
 <?php 
+
 
 $query = sprintf('SELECT lvef, end_diastolic_frame_number, end_systolic_frame_number, time_per_frame_ms, first_point_on_lv_curve FROM muga_data WHERE session_id=%d AND study_id=%d',$session_id,$study_id);
 
@@ -113,8 +113,7 @@ $row = mysql_fetch_assoc($result)
   	<INPUT name="first_point_on_lv_curve" size="6" type="text" value="<?php echo $row['first_point_on_lv_curve']; ?>" tabindex="5" />
   </DIV>
  <DIV class="sqaf">
-  <input type="submit" name="navigate" value="previous" tabindex="6">
-  <input type="submit" name="navigate" value="next" tabindex="7">
+  <button type="submit" name="navigate" value="next" tabindex="6">Next</button>
   </DIV>
 
 <table class="list">
@@ -133,7 +132,7 @@ while($row = mysql_fetch_assoc($result)) {
   if ($row['study_id'] == $study_id) {
     $style .= "background:  #001181; color: #e0e0ff;";
   } else {
-    $style .= "color:  #001181; background-color: #e0e0ff;";
+    $style .= "coloed:  #001181; background-color: #e0e0ff;";
   }
   if (! $row['is_valid']) {
     $style .= "border: thin solid red;";
@@ -141,9 +140,9 @@ while($row = mysql_fetch_assoc($result)) {
     $style .= "border: thin solid gray;";
   }
   echo '<td class="list">' . 
-    '<input name="navigate" style="' . $style . 
-    '"type="submit" value="' . $row['study_id'] . 
-    '">' . '</td>';
+    '<button name="navigate" style="' . $style . 
+    '"type="submit" tabindex=8 value="' . $row['study_id'] . 
+    '">' . $row['study_id'] . '</button></td>';
 }
 
 

@@ -24,6 +24,8 @@ if (! mysql_select_db($db_database)) {
 <h1 class="sqa">Software Quality Assurance</h1>
   <div class="sqah1">&nbsp;</div>
 
+<div style="width: 47%; float: left; padding-right: 1em; border-right: thin solid rgb(200,200,255);">
+
 <h2 class="sqa">Existing operator</h2>
 
   <form action="checked_in.php"><span class="sqaopf">Operator code:
@@ -42,6 +44,10 @@ if ( $operator_code_error != '') {
 ?>
 
 </form>
+
+</div>
+
+<div style="width: 47%; float: right;">
 
 <h2 class="sqa">New operator</h2>
 
@@ -80,7 +86,7 @@ if ( $operator_code_error != '') {
 </p>
 </FORM>
 
-
+</div>
 
 </body>
 </html>

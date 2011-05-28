@@ -65,6 +65,6 @@ $query = sprintf('DELETE FROM module_data WHERE sheet_id=%s',$sheet_id);
       die($message);
     }
 
-header("Location:http://anzsnm-test.barnett.id.au/sqa/admin_audits.php");
+header("Location:" . $sqa_www_root . "/admin_audits.php");
 
 ?>

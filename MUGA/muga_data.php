@@ -1,5 +1,3 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-    "http://www.w3.org/TR/html4/loose.dtd">
 <?php
 
 require_once('../settings.php');
@@ -14,7 +12,8 @@ require_once('../session.inc.php');
 $session_id = check_session(-1);
 
 ?>
-
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+    "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
    	<style type="text/css" title="currentStyle" media="screen">
@@ -47,28 +46,28 @@ $row = mysql_fetch_assoc($result);
 
 
 
- <FIELDSET class="sqaf"> 
+<FIELDSET class="sqaf">
   <LEGEND class="sqaf">Computer System and Software</LEGEND>
 
   <DIV class="sqaf">
   <SPAN class="sqaf">Manufacturer: </SPAN>
   <?php $row = update_field('muga_session','manufacturer','/^.*$/',true,'session_id',$session_id,$row); ?>
-<INPUT name="manufacturer" size="24" type="text" value="<?php echo htmlspecialchars($row['manufacturer']); ?>"  />
+<INPUT name="manufacturer" size="24" type="text" value="<?php echo htmlspecialchars($row['manufacturer']); ?>" tabindex="" />
   </DIV>
   <DIV class="sqaf">
   <SPAN class="sqaf">Make and model: </SPAN>
   <?php $row = update_field('muga_session','make_and_model','/^.*$/',true,'session_id',$session_id,$row); ?>
-  <INPUT name="make_and_model" size="24" type="text" value="<?php echo htmlspecialchars($row['make_and_model']); ?>"  />
+  <INPUT name="make_and_model" size="24" type="text" value="<?php echo htmlspecialchars($row['make_and_model']); ?>" tabindex="" />
   </DIV>
   <DIV class="sqaf">
   <SPAN class="sqaf">Name of software: </SPAN>
   <?php $row = update_field('muga_session','name_of_software','/^.*$/',true,'session_id',$session_id,$row); ?>
-  <INPUT name="name_of_software" size="24" type="text" value="<?php echo htmlspecialchars($row['name_of_software']); ?>"  />
+  <INPUT name="name_of_software" size="24" type="text" value="<?php echo htmlspecialchars($row['name_of_software']); ?>" tabindex="" />
   </DIV>
   <DIV class="sqaf">
   <SPAN class="sqaf">Software version: </SPAN>
   <?php $row = update_field('muga_session','software_version','/^.*$/',true,'session_id',$session_id,$row); ?>
-  <INPUT name="software_version" size="24" type="text" value="<?php echo htmlspecialchars($row['software_version']); ?>"  />
+  <INPUT name="software_version" size="24" type="text" value="<?php echo htmlspecialchars($row['software_version']); ?>" tabindex="" />
   </DIV>
   <DIV class="sqaf">
   <SPAN class="sqaf">Type of software:</SPAN>
@@ -77,7 +76,7 @@ $row = mysql_fetch_assoc($result);
   </div>
   </DIV>
 
- </FIELDSET>
+  </FIELDSET>
 
   <?php
 
@@ -115,7 +114,7 @@ $row = mysql_fetch_assoc($result);
   
   <DIV class="sqaf">
   <SPAN class="sqaf">
-  <button type="submit" name="update" value="1">Save</button> and start entering results<br>
+  <button type="submit" name="update" value="1">Save</button> and start entering results<p>
 </span></div>
 
  <iframe width=550 height=300 src="muga_study.php?session_code=<?php echo session_code(); ?>"></iframe>
@@ -130,12 +129,12 @@ $row = mysql_fetch_assoc($result);
 					 <DIV class="sqaf">
 					 <SPAN class="sqaf">Minimum of normal range for your site (%):</SPAN>
   <?php $row = update_field('muga_session','normal_range_minimum','/^\d+$/',false,'session_id',$session_id,$row); ?>
-  <INPUT name="normal_range_minimum" size="4" type="text" value="<?php echo $row['normal_range_minimum']; ?>"  />
+  <INPUT name="normal_range_minimum" size="4" type="text" value="<?php echo $row['normal_range_minimum']; ?>" tabindex="" />
   </DIV>
   <DIV class="sqaf">
   <SPAN class="sqaf">Maximum of normal range for your site (%):</SPAN>
   <?php $row = update_field('muga_session','normal_range_maximum','/^\d+$/',false,'session_id',$session_id,$row); ?>
-  <INPUT name="normal_range_maximum" size="4" type="text" value="<?php echo $row['normal_range_maximum']; ?>"  />
+  <INPUT name="normal_range_maximum" size="4" type="text" value="<?php echo $row['normal_range_maximum']; ?>" tabindex="" />
   </DIV>
 
 
@@ -169,7 +168,7 @@ $row = mysql_fetch_assoc($result);
   <SPAN class="sqaf">Were phase images used for ROI definition?</SPAN>
   <div style="margin-left: 3em;">
   <?php update_radio_input('muga_session','phase_images_used_for_ROI_definition',
-			   array('0' => 'no', '1' => 'yes', '2' => 'don&#39;t know'),false,'session_id',$session_id,$row);  ?>
+			   array('0' => 'no', '1' => 'yes', '2' => 'don&apos;t know'),false,'session_id',$session_id,$row);  ?>
   </div>
   </DIV>
   <DIV class="sqaf">
@@ -177,7 +176,7 @@ $row = mysql_fetch_assoc($result);
   <SPAN class="sqaf">Were separate systole and diastole ROIs used?</SPAN>
   <div style="margin-left: 3em;">
   <?php update_radio_input('muga_session','separate_systole_and_diastole_ROIs_used',
-			   array('0' => 'no', '1' => 'yes', '2' => 'don&#39;t know'),false,'session_id',$session_id,$row);  ?>
+			   array('0' => 'no', '1' => 'yes', '2' => 'don&apos;t know'),false,'session_id',$session_id,$row);  ?>
   
   </div>
   </DIV>
@@ -214,7 +213,7 @@ $row = mysql_fetch_assoc($result);
   <SPAN class="sqaf">How many smoothing cycles were performed?</SPAN>
   <?php $row = update_field('muga_session','smoothing_cycles','/^\d+$/',false,'session_id',$session_id,$row); ?>
 
-  <INPUT name="smoothing_cycles" size="4" type="text" value="<?php echo htmlspecialchars($row['smoothing_cycles']); ?>"  />
+  <INPUT name="smoothing_cycles" size="4" type="text" value="<?php echo htmlspecialchars($row['smoothing_cycles']); ?>" tabindex="" />
   </DIV>
   <DIV class="sqaf">
   <SPAN class="sqaf">Please describe briefly how the ejection fraction (LVEF) is calculated from the LVcurve.</SPAN>

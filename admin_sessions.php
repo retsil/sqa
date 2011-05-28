@@ -154,7 +154,7 @@ while ($row = mysql_fetch_assoc($result)) {
   echo '</td>';
   echo '<td class="list">' . $row['registered_date'] . '</td>';
   echo '<td class="list">' . htmlspecialchars($row['comments']) . '</td>';
-  echo '<td class="list"><form method="post" action="verify_session.php" class="list"><input type="hidden" name="password" value="' . $password . '" /><input type="hidden" name="collection_id" value="' . $collection_id . '" /><input type="hidden" name="session_id" value="' . $row['session_id'] . '" />';
+  echo '<td class="list"><form method="post" action="verify_session.php" class="list"><input type="hidden" name="password" value="' . $password . '" /><input type="hidden" name="collection_id" value="' . $collection_id . '" /><input type="hidden" name=session_id value="' . $row['session_id'] . '" />';
   if ( $row['is_verified'] ) {
     echo '<input type="hidden" name="verify" value="0" />';
     echo '<button type="submit" class="list">Remove verification</button>';

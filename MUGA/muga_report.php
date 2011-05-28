@@ -164,9 +164,13 @@ $collection_id = collection_id($session_id);
 <?php
 
 
-  $field_labels = array('lvef' => "Ejection Fraction", 'end_systolic_frame_number' => "End Systole Frame", 'end_diastolic_frame_number' => "End Diastole Frame Number", 'end_diastolic_frame_difference' => "End Systole - End Diastole Frame Difference");
+  $field_labels = array('lvef' => "Ejection Fraction", 'end_systolic_frame_number' => "End Systole Frame", 'end_diastolic_frame_number' => "End Diastole Frame Number");
 
-$field_sql = array('lvef' => "lvef", 'end_diastolic_frame_number' => "end_diastolic_frame_number", 'end_systolic_frame_number' => "end_systolic_frame_number", 'end_diastolic_frame_difference' => "MOD(end_systolic_frame_number-end_diastolic_frame_number+32,32)");
+// , 'end_diastolic_frame_difference' => "End Systole - End Diastole Frame Difference");
+
+$field_sql = array('lvef' => "lvef", 'end_diastolic_frame_number' => "end_diastolic_frame_number", 'end_systolic_frame_number' => "end_systolic_frame_number");
+
+// , 'end_diastolic_frame_difference' => "MOD(end_systolic_frame_number-end_diastolic_frame_number+32,32)");
 
 ?>
 
@@ -278,7 +282,7 @@ for ($row_i=0;$row_i < $nstudies; $row_i++) {
      echo "<td>" .  $stats['value']['lvef'][$row_i] . " (" . $stats['comparison']['lvef'][$row_i] . ")</td>";
      echo "<td>" .  $stats['value']['end_systolic_frame_number'][$row_i] . " (" . $stats['comparison']['end_systolic_frame_number'][$row_i] . ")</td>";
      echo "<td>" .  $stats['value']['end_diastolic_frame_number'][$row_i] . "</td>";
-     echo "<td>(" . $stats['comparison']['end_diastolic_frame_difference'][$row_i] . ")</td>";
+#     echo "<td>(" . $stats['comparison']['end_diastolic_frame_difference'][$row_i] . ")</td>";
      echo '</tr>';
      }
 
