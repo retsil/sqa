@@ -23,6 +23,9 @@ $session_id = check_session(-1);
 </head>
 <body>
 
+
+
+
 <form action="muga_data.php?session_code=<?php echo session_code(); ?>" method="POST">
 
 
@@ -44,6 +47,7 @@ $row = mysql_fetch_assoc($result);
 <h1 class="sqa">Software Quality Assurance</h1>
   <div class="sqah1">&nbsp;</div>
 
+  <h2 class="sqa">MUGA data entry [ Part 1 | <a href="muga_study.php?session_code=<?php echo session_code(); ?>">Part 2</a> ]</h2>
 
 
 <FIELDSET class="sqaf">
@@ -114,11 +118,14 @@ $row = mysql_fetch_assoc($result);
   
   <DIV class="sqaf">
   <SPAN class="sqaf">
+
+<!--
   <button type="submit" name="update" value="1">Save</button> and start entering results<p>
 </span></div>
 
  <iframe width=550 height=300 src="muga_study.php?session_code=<?php echo session_code(); ?>"></iframe>
 
+-->
 
 					 <FIELDSET class="sqaf">
 					 <LEGEND class="sqaf">Normal Range</LEGEND>
