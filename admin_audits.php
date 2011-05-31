@@ -72,7 +72,6 @@ remove sessions. Export the audit as a table to access the entered data.</div>
 <th class="list">Visible</th>
 <th class="list">Open sessions</th>
 <th class="list">Export as sheets</th>
-<th class="list">Import sheets</th>
 
 <?php
 
@@ -105,30 +104,8 @@ while ($row = mysql_fetch_assoc($result)) {
   echo '<td><form action="export_audit.php" method="POST"><input type="hidden" name="collection_id" value="'. $row['collection_id'] . '">';
   echo 'Name: <input name="sheet_name" type="text"><button type="submit" class="list">Export</button></form></td>';
   $module_id = $row['module_id'];
-
-  $query_sheet = sprintf('SELECT module_sheets.sheet_id, module_sheets.title FROM module_sheets LEFT JOIN module_sheet_type ON' .
-			 ' module_sheets.type_id=module_sheet_type.type_id WHERE module_sheets.moodle_id=%d AND module_sheet_type.module_id=%d',$moodle_id,$module_id);
-  $result_sheet = mysql_query($query_sheet);
-  if (!$result_sheet) {
-    $message  = 'Invalid query: ' . mysql_error() . "\n";
-    $message .= 'Whole query: ' . $query_sheet;
-    die($message);
-  }
   
-  $import_html = '';
-  while ($row_sheet = mysql_fetch_assoc($result_sheet)) {
-    $import_html .= '<option value="' . $row_sheet['sheet_id'] . '">' . $row_sheet['title'] . '</option>';
-  }
-
-  if ($import_html == '') {
-    echo '<td>No available sheets</td>';
-  } else {
-    echo '<td><form action="import_audit.php" method="POST"><input type="hidden" name="collection_id" value="'. $row['collection_id'] . '">';
-    echo '<select name="sheet_id" size="1">';
-    echo $import_html;
-    echo '</select><button type="submit" class="list">Import</button></form></td>';
-  }  
-  echo '</tr>';
+   echo '</tr>';
 }
 
 mysql_free_result($result);
@@ -278,50 +255,6 @@ while ($row = mysql_fetch_assoc($result)) {
 </table>
 
 
-
-<?php
-  $module_html = '';
-
-  $query = 'SELECT type_id, type_name FROM module_sheet_type';
-
-
-$result = mysql_query($query);
-if (!$result) {
-  $message  = 'Invalid query: ' . mysql_error() . "\n";
-  $message .= 'Whole query: ' . $query;
-  die($message);
- }
-
-while ($row = mysql_fetch_assoc($result)) {
-  
-  $module_html .= '<option value="' . $row['type_id'] . '" >' . $row['type_name'] . '</option>';
-}
-?>
-
-<FORM action="upload_sheet.php" enctype="multipart/form-data"  METHOD="POST">
-
-<FIELDSET class="sqaf">
-  <LEGEND class="sqaf">Upload spreadsheet</LEGEND>
-  <DIV class="sqaf"> 
-	<SPAN class="sqaf">File:</SPAN>
-	<INPUT name="sheet_data" size="30" type="file"/>
-  </DIV>
-  <DIV class="sqaf"> 
-	<SPAN class="sqaf">Name:</SPAN>
-	<INPUT name="name" size="30" type="text"/>
-  </DIV>
-  <DIV class="sqaf"> 
-	<SPAN class="sqaf">Sheet type:</SPAN>
-	<SELECT name="type_id" tabindex="12" >
-  <?php echo $module_html; ?>
-	</SELECT>
-  </DIV>
-  <DIV class="sqaf"> 
-        <button type="submit">Upload</button>
-  </div>
-  </LEGEND>
-</FIELDSET>
-</FORM>
 
 
 

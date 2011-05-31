@@ -26,7 +26,6 @@ $session_id = check_session(-1);
 
 
 
-<form action="muga_data.php?session_code=<?php echo session_code(); ?>" method="POST">
 
 
 <?php 
@@ -39,6 +38,7 @@ $result = my_query($query);
 $row = mysql_fetch_assoc($result);
 
 
+//  update `module` set `import_module`='MUGA/muga_import.php', `export_module`='MUGA/muga_export.php', data_url='MUGA/muga_study.php' WHERE title='MUGA';
 
 ?>
 
@@ -47,8 +47,11 @@ $row = mysql_fetch_assoc($result);
 <h1 class="sqa">Software Quality Assurance</h1>
   <div class="sqah1">&nbsp;</div>
 
-  <h2 class="sqa">MUGA data entry [ Part 1 | <a href="muga_study.php?session_code=<?php echo session_code(); ?>">Part 2</a> ]</h2>
 
+  <h2 class="sqa">MUGA data entry [ <a href="muga_study.php?session_code=<?php echo session_code(); ?>">Part 1</a> | Part 2 |
+<A href="../checked_in.php?session_code=<?php echo session_code(); ?>">Exit</a> ]</h2>
+
+<form action="muga_data.php?session_code=<?php echo session_code(); ?>" method="POST">
 
 <FIELDSET class="sqaf">
   <LEGEND class="sqaf">Computer System and Software</LEGEND>
@@ -118,14 +121,6 @@ $row = mysql_fetch_assoc($result);
   
   <DIV class="sqaf">
   <SPAN class="sqaf">
-
-<!--
-  <button type="submit" name="update" value="1">Save</button> and start entering results<p>
-</span></div>
-
- <iframe width=550 height=300 src="muga_study.php?session_code=<?php echo session_code(); ?>"></iframe>
-
--->
 
 					 <FIELDSET class="sqaf">
 					 <LEGEND class="sqaf">Normal Range</LEGEND>
@@ -229,12 +224,8 @@ $row = mysql_fetch_assoc($result);
  <TEXTAREA NAME="description_of_ejection_fraction_calculation" ROWS=7 COLS=50><?php echo htmlspecialchars($row['description_of_ejection_fraction_calculation']); ?></TEXTAREA>
   </DIV> 
   </FIELDSET>
-  <DIV class="sqaf">
-  <button type="submit" name="update" value="1">Save</button>
 
-<span class="sqamenu"><a href="../checked_out.php">Exit</a></span>
-
-</div>
+   <div class="sqaf"><button type="submit" name="update" value="1">Save</button></div>
 
   </form>
 
