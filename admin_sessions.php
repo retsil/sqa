@@ -132,7 +132,7 @@ mysql_free_result($result);
 <th class="list">Operator Code</th>
 <th class="list">Opened On</th>
 <th class="list">Comments</th>
-<th class="list">Verify</th>
+<th class="list">Locked</th>
 <th class="list"></th>
 </tr>
 
@@ -157,10 +157,10 @@ while ($row = mysql_fetch_assoc($result)) {
   echo '<td class="list"><form method="post" action="verify_session.php" class="list"><input type="hidden" name="password" value="' . $password . '" /><input type="hidden" name="collection_id" value="' . $collection_id . '" /><input type="hidden" name=session_id value="' . $row['session_id'] . '" />';
   if ( $row['is_verified'] ) {
     echo '<input type="hidden" name="verify" value="0" />';
-    echo '<button type="submit" class="list">Remove verification</button>';
+    echo '<button type="submit" class="list">Remove lock</button>';
   } else {
     echo '<input type="hidden" name="verify" value="1" />';
-    echo '<button type="submit" class="list">Verfiy session</button>';
+    echo '<button type="submit" class="list">Lock session</button>';
   }
   echo '</form></td>';
   echo '</tr>';

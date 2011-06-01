@@ -173,12 +173,23 @@ function updatetextinputs($table_name,$field_name,$regex,$quot,$row_id_name,$ses
 <body>
 
 
-<div class="sqamenu"><span class="sqamenu"><a href="../index.php">Welcome</a></span> <span class="sqamenu"><a href="../checked_out.php">Participate</a></span> <span class="sqamenusel">MUGA</span></div>
+<div class="sqamenu" style="text-align: right"><span class="sqamenu"><a href="../index.php">Welcome</a></span> <span class="sqamenu"><a href="../checked_in.php?session_code=<?php echo session_code(); ?>">Participate</a></span> <span class="sqamenu"><a href="../admin_audits.php">Administrate</a></span> <p>
+<span class="sqamenusel">MUGA</span></div>
+
 
 <h1 class="sqa">Software Quality Assurance</h1>
   <div class="sqah1">&nbsp;</div>
   <h2 class="sqa">MUGA data entry [ Part 1 | <a href="muga_data.php?session_code=<?php echo session_code(); ?>">Part 2</a> |
 <A href="../checked_in.php?session_code=<?php echo session_code(); ?>">Exit</a> ]</h2>
+
+
+<?php
+if ($_POST['rm'] == 'CSV') {
+    echo "<SPAN class='sqa'>All studies are combined below into comma delimited text. Enter all data (including Study ID) and convert into a table.</span>"; 
+} else {
+    echo "<SPAN class='sqa'>Enter data and click save below.</span>"; 
+}
+?>
 
 
 
@@ -205,12 +216,6 @@ $error_messages = array();
 
 $table_name = 'muga_data';
 
-$error_messages = updatetextinputs($table_name,'lvef','/^\d+$/',false,'study_id',$session_id,$error_messages,"Must be an integer");
-$error_messages = updatetextinputs($table_name,'end_diastolic_frame_number','/^\d+$/',false,'study_id',$session_id,$error_messages,"Must be an integer");
-$error_messages = updatetextinputs($table_name,'end_systolic_frame_number','/^\d+$/',false,'study_id',$session_id,$error_messages,"Must be an integer");
-$error_messages = updatetextinputs($table_name,'time_per_frame_ms','/^\d+$/',false,'study_id',$session_id,$error_messages,"Must be an integer");
-$error_messages = updatetextinputs($table_name,'first_point_on_lv_curve','/^\d+$/',false,'study_id',$session_id,$error_messages,"Must be an integer");
-
 $field_names = array('lvef','end_diastolic_frame_number','end_systolic_frame_number','time_per_frame_ms','first_point_on_lv_curve');
 $hidden_field_names = array('study_id');
 $all_field_names = array_merge($hidden_field_names,$field_names);
@@ -222,9 +227,16 @@ if ($_POST['rm'] == 'CSV') {
     echo "</td></tr>";
 } else if ($_POST['rm'] == 'Table') {
     echo explodeintotexttable($all_field_names);
-
+    echo "<tr><td colspan='" . count($all_field_names) . "'><span id='invalid'>Table is not saved</span><td></tr>";
 } else {
-    $query = sprintf('SELECT study_id, lvef, end_diastolic_frame_number, end_systolic_frame_number, time_per_frame_ms, first_point_on_lv_curve FROM muga_data WHERE session_id=%d',$session_id);
+         $error_messages = updatetextinputs($table_name,'lvef','/^\d+$/',false,'study_id',$session_id,$error_messages,"Must be an integer");
+        $error_messages = updatetextinputs($table_name,'end_diastolic_frame_number','/^\d+$/',false,'study_id',$session_id,$error_messages,"Must be an integer");
+        $error_messages = updatetextinputs($table_name,'end_systolic_frame_number','/^\d+$/',false,'study_id',$session_id,$error_messages,"Must be an integer");
+        $error_messages = updatetextinputs($table_name,'time_per_frame_ms','/^\d+$/',false,'study_id',$session_id,$error_messages,"Must be an integer");
+        $error_messages = updatetextinputs($table_name,'first_point_on_lv_curve','/^\d+$/',false,'study_id',$session_id,$error_messages,"Must be an integer");
+
+    
+        $query = sprintf('SELECT study_id, lvef, end_diastolic_frame_number, end_systolic_frame_number, time_per_frame_ms, first_point_on_lv_curve FROM muga_data WHERE session_id=%d',$session_id);
 
     $select_result = my_query($query);
 
@@ -252,9 +264,13 @@ if ($count_errors > 0) {
 ?>
 
 
-<?php if ($_POST['rm'] != 'CSV') echo "<input name='rm' type='submit' value='CSV'/>"; ?>
-<?php if ($_POST['rm'] == 'CSV') echo "<input name='rm' type='submit' value='Table'/>"; ?>
-<?php if ($_POST['rm'] != 'CSV') echo "<input name='rm' type='submit' value='Save'/>"; ?>
+<?php if ($_POST['rm'] == 'CSV') {
+    echo "<button name='rm' type='submit' value='Table'>Convert to table</button>"; 
+} else {
+    echo "<button name='rm' type='submit' value='CSV'>Convert to CSV</button>"; 
+    echo "<button name='rm' type='submit' value='Save'>Save</button>";
+}
+?>
 
 </form>
 

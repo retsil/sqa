@@ -154,7 +154,10 @@ $collection_id = collection_id($session_id);
 
 ?>
 
-<div class="sqamenu"><span class="sqamenu"><a href="../index.php">Welcome</a></span> <span class="sqamenu"><a href="../checked_out.php">Participate</a></span> <span class="sqamenusel">MUGA</span></div>
+<div class="sqamenu" style="text-align: right"><span class="sqamenu"><a href="../index.php">Welcome</a></span> <span class="sqamenu"><a href="../checked_in.php?session_code=<?php echo session_code(); ?>">Participate</a></span> <span class="sqamenu"><a href="../admin_audits.php">Administrate</a></span> <p>
+<span class="sqamenusel">MUGA</span></div>
+
+
 
 <h1 class="sqa">Software Quality Assurance</h1>
   <div class="sqah1">&nbsp;</div>
@@ -266,7 +269,9 @@ $stats =  field_stats($field_labels, $field_sql,$session_id,$collection_id);
 
 $nstudies = $stats['count'];
 
-echo '<h3>Your results</h3>';
+
+  echo '<h2 class="sqa">Your results [ <A href="../checked_in.php?session_code=' . session_code() . '">Exit</a> ]</h2>';
+    
  echo '<table class="results">';
     echo '<tr>';
     echo '<th class="results">Study ID</th>';
@@ -291,7 +296,7 @@ echo '</table>';
 #foreach ($field_labels as $field => $label) { 
 $field = 'lvef';
     # foreach ($fields as $field) {
-  echo "<br clear='all'><h3>" . $field_labels[$field] . "</h3>";
+  echo "<br clear='all'><h2 class='sqa'>" . $field_labels[$field] . "</h2>";
   $column_range = column_range('muga_data', $field_sql[$field], $collection_id);
   $column_scale = 
     'chds=' . $column_range['min'] . ',' . $column_range['max'] . "&amp;". 
@@ -424,5 +429,8 @@ tabulate_stats($values,$stats,$session_stats);
 ?>
   </div>
 
+<?php
+  echo '<h2 class="sqa">[ <A href="../checked_in.php?session_code=' . session_code() . '">Exit</a> ]</h2>';
+?>
 	</body>
   </html>

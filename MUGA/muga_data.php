@@ -42,7 +42,8 @@ $row = mysql_fetch_assoc($result);
 
 ?>
 
-<div class="sqamenu"><span class="sqamenu"><a href="../index.php">Welcome</a></span> <span class="sqamenu"><a href="../checked_out.php">Participate</a></span> <span class="sqamenusel">MUGA</span></div>
+<div class="sqamenu" style="text-align: right"><span class="sqamenu"><a href="../index.php">Welcome</a></span> <span class="sqamenu"><a href="../checked_in.php?session_code=<?php echo session_code(); ?>">Participate</a></span> <span class="sqamenu"><a href="../admin_audits.php">Administrate</a></span> <p>
+<span class="sqamenusel">MUGA</span></div>
 
 <h1 class="sqa">Software Quality Assurance</h1>
   <div class="sqah1">&nbsp;</div>
@@ -50,6 +51,8 @@ $row = mysql_fetch_assoc($result);
 
   <h2 class="sqa">MUGA data entry [ <a href="muga_study.php?session_code=<?php echo session_code(); ?>">Part 1</a> | Part 2 |
 <A href="../checked_in.php?session_code=<?php echo session_code(); ?>">Exit</a> ]</h2>
+
+<SPAN class="sqa">Enter data and click save below.</span>
 
 <form action="muga_data.php?session_code=<?php echo session_code(); ?>" method="POST">
 

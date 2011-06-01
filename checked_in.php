@@ -73,13 +73,13 @@ if (empty( $operator_id)) {
 <th class="list">Institution</th>
 <th class="list">Dataset</th>
 <th class="list">Opened On</th>
-<th class="list">Verify By</th> <!-- or verified -->
+<th class="list">End date</th> <!-- or verified -->
 <th class="list">Comments</th>
 <th class="list" colspan=2></th>
 </tr>
 
 <?php
-  $query = sprintf('SELECT session.session_code, session.comments, session.is_verified, collection.scope, DATE_FORMAT(session.registered,"%%e/%%c/%%Y") AS registered_date, DATE_FORMAT(collection.end_date,"%%e/%%c/%%Y") AS end_date, institution.title AS institution, module.title AS module, module.data_url, module.report_url FROM collection, institution, module, session WHERE collection.module_id = module.module_id AND collection.institution_id = institution.institution_id AND session.collection_id=collection.collection_id AND session.operator_id=%d',$operator_id);
+  $query = sprintf('SELECT session.session_code, session.comments, session.is_verified, collection.allow_report, collection.scope, DATE_FORMAT(session.registered,"%%e/%%c/%%Y") AS registered_date, DATE_FORMAT(collection.end_date,"%%e/%%c/%%Y") AS end_date, institution.title AS institution, module.title AS module, module.data_url, module.report_url FROM collection, institution, module, session WHERE collection.module_id = module.module_id AND collection.institution_id = institution.institution_id AND session.collection_id=collection.collection_id AND session.operator_id=%d',$operator_id);
 $result = mysql_query($query);
 if (!$result) {
     $message  = 'Invalid query: ' . mysql_error() . "\n";
@@ -98,17 +98,22 @@ while ($row = mysql_fetch_assoc($result)) {
   echo '<td class="list">' . $row['module'] . '</td>';
   echo '<td class="list">' . $row['registered_date'] . '</td>';
   if ( $row['is_verified'] ) {
-    echo '<td class="list">Verified</td>';
+    echo '<td class="list">Locked</td>';
   } else {
     echo '<td class="list">' . $row['end_date'] . '</td>';
   }
   echo '<td class="list">' . htmlspecialchars($row['comments']) . '</td>';
-  if ( $row['is_verified'] ) {
-    echo '<td class="list"><form method="get" action="' . $row['report_url'] . '" class="list"><input type="hidden" name="session_code" value="' . $row['session_code'] . '" /><button type="submit" class="list">View results</button></form></td><td></td>';
-  } else {
-   echo '<td class="list"><form method="get" action="' . $row['report_url'] . '" class="list"><input type="hidden" name="session_code" value="' . $row['session_code'] . '" /><button type="submit" class="list">View results</button></form></td>';
-    echo '<td class="list"><form method="get" action="' . $row['data_url'] . '" class="list"><input type="hidden" name="session_code" value="' . $row['session_code'] . '" /><button type="submit" class="list">Enter data</button></form></td>';
-  }
+
+    if ($row['allow_report']) {
+        echo '<td class="list"><form method="get" action="' . $row['report_url'] . '" class="list"><input type="hidden" name="session_code" value="' . $row['session_code'] . '" /><button type="submit" class="list">View results</button></form></td>';
+    } else {
+        echo '<td></td>';
+    }
+    if (! $row['is_verified'] ) {
+        echo '<td class="list"><form method="get" action="' . $row['data_url'] . '" class="list"><input type="hidden" name="session_code" value="' . $row['session_code'] . '" /><button type="submit" class="list">Enter data</button></form></td>';
+    } else {
+        echo '<td></td>';
+    }
   echo '</tr>';
 }
 

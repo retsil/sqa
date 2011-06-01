@@ -48,15 +48,29 @@ if (!$result) {
 
 if (! $row = mysql_fetch_assoc($result)) die("No auth for institution");
 
-if (! $row['visible_priv']) die("Not allowed to change visibility");
+if (array_key_exists('visible',$_POST)) {
+    if (! $row['visible_priv']) die("Not allowed to change visibility");
 
-$query = sprintf('UPDATE collection SET visible=%d WHERE collection_id=%d',$_POST['visible']=='1',$collection_id);
+    $query = sprintf('UPDATE collection SET visible=%d WHERE collection_id=%d',$_POST['visible']=='1',$collection_id);
 
-$result = mysql_query($query);
-if (!$result) {
-    $message  = 'Invalid query: ' . mysql_error() . "\n";
-    $message .= 'Whole query: ' . $query;
-    die($message);
+    $result = mysql_query($query);
+    if (!$result) {
+        $message  = 'Invalid query: ' . mysql_error() . "\n";
+        $message .= 'Whole query: ' . $query;
+        die($message);
+    }
+}
+
+if (array_key_exists('allow_report',$_POST)) {
+
+    $query = sprintf('UPDATE collection SET allow_report=%d WHERE collection_id=%d',$_POST['allow_report']=='1',$collection_id);
+
+    $result = mysql_query($query);
+    if (!$result) {
+        $message  = 'Invalid query: ' . mysql_error() . "\n";
+        $message .= 'Whole query: ' . $query;
+        die($message);
+    }
 }
 
 header("Location: " . $sqa_www_root . "/admin_audits.php");
