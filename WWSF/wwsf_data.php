@@ -24,6 +24,22 @@ $session_id = check_session(-1);
 </head>
 <body>
 
+
+
+<div class="sqamenu" style="text-align: right"><span class="sqamenu"><a href="../index.php">Welcome</a></span> <span class="sqamenu"><a href="../checked_in.php?session_code=<?php echo session_code(); ?>">Participate</a></span> <span class="sqamenu"><a href="../admin_audits.php">Administrate</a></span> <p>
+<span class="sqamenusel">WWSF</span></div>
+
+<h1 class="sqa">Software Quality Assurance</h1>
+  <div class="sqah1">&nbsp;</div>
+
+
+  <h2 class="sqa">WWSF data entry [ <span class="sqasel">Part 1</span> | <a href="wwsf_study.php?session_code=<?php echo session_code(); ?>">Part 2</a> |
+<A href="../checked_in.php?session_code=<?php echo session_code(); ?>">Exit</a> ]</h2>
+
+
+<p>Enter data and click save below.</p>
+
+
 <form action="wwsf_data.php?session_code=<?php echo session_code(); ?>" method="POST">
 
 
@@ -49,12 +65,6 @@ $row = mysql_fetch_assoc($result);
 
  
 ?>
-
-<div class="sqamenu"><span class="sqamenu"><a href="../index.php">Welcome</a></span> <span class="sqamenu"><a href="../checked_out.php">Participate</a></span> <span class="sqamenusel">Split Function</span></div>
-
-<h1 class="sqa">Software Quality Assurance</h1>
-  <div class="sqah1">&nbsp;</div>
-
 
 
  <FIELDSET class="sqaf"> 
@@ -127,15 +137,12 @@ $row = mysql_fetch_assoc($result);
 
   ?>
 
-  <button type="submit" name="update" value="1">Save</button> and start entering results<br>
 </span></div>
-
- <iframe width=550 height=300 src="wwsf_study.php?session_code=<?php echo session_code(); ?>"></iframe>
 
   <DIV class="sqaf">
   <button type="submit" name="update" value="1">Save</button>
 
-<span class="sqamenu"><a href="../checked_out.php">Exit</a></span>
+<p>Click on save and proceed to part 2 using menu bar</p>
 
 </div>
 

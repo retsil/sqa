@@ -157,4 +157,143 @@ function my_query($query) {
   }
   return $result;
 }
+
+
+// Turn a sql selection result into a set of text inputs.
+// Submitted data is susbstituted into the text fields regardless of whether it is valid
+// Given the table layout, error messages appear as tooltips which appear as the user hovers over each entry.
+function explodeintotextinputs($field_names,$hidden_field_names,$select_result,$error_messages) {
+    $html = '';
+    $r = 0;
+    $t = 2;
+    while($row = mysql_fetch_assoc($select_result)) {
+        $html .= '<tr>';
+        foreach ($hidden_field_names as $field_name) {
+            $post_name = $field_name . $r;
+            $value = htmlspecialchars($row[$field_name]);
+            $html .= sprintf('<td><input name="%s" type="hidden" value="%s"/>%s</td>',$post_name,$value,$value);
+        }
+        foreach ($field_names as $field_name) {
+            $post_name = $field_name . $r;
+			if (array_key_exists($post_name,$_POST)) {
+                // Show the submitted data 
+                $value = htmlspecialchars($_POST[$post_name]);
+			} else {
+				// Otherwise there is no submitted data then display the SQL result
+                $value = htmlspecialchars($row[$field_name]);
+            }
+            $html .= '<td><input ';
+			if (array_key_exists($post_name,$error_messages)) {
+                $error_message = htmlspecialchars($error_messages[$post_name]);
+				$html .= sprintf(' id="invalid" onmouseover="tooltip.show(\'%s\');" onmouseout="tooltip.hide();" ',$error_message);
+			} else {
+				$html .= ' id="valid" ';
+            }
+            $html .= sprintf(' name="%s" type="text" value="%s" tabindex="%s" /></td>',$post_name,$value,$t);
+            $t++;
+        }
+        $html .= "</tr>\n";
+        $r++;
+    }
+    $html .= sprintf('<input name="nrows" type="hidden" value="%d" />',$r);
+    return($html);
+}
+
+
+// Turn a sql selection result into a text area.
+function implodeintotextarea($field_names) {
+    $nrows=$_POST{'nrows'};
+    $ncolumns=count($field_names);
+
+    $csv_data=array_fill(0,$nrows,'');
+    for ($r = 0; $r < $nrows; $r++) {
+        $csv_line = array_fill(0,$ncolumns,'');
+        for ($c = 0; $c < $ncolumns; $c++) {
+            $name = $field_names[$c] . $r;
+            $csv_line[$c] = $_POST{$name};
+        }
+        $csv_data[$r] = implode(',',$csv_line);
+    }
+
+    $html = '<textarea name="csv_data" rows="' . $nrows . '" cols="' . $ncolumns*8 . '">';
+    $html .= implode("\n",$csv_data);
+    $html .= '</textarea>';
+    $html .= sprintf('<input name="nrows" type="hidden" value="%d" />',$r);
+    return($html);
+}
+
+function explodeintotexttable($field_names) {
+    $html = '';
+    $lines = explode("\n",$_POST['csv_data']);
+    $l=0;
+    $maxf=0;
+    foreach ($lines as $line) {
+        print('<tr>');
+        $f=0;
+        $cols = explode(',',$line);
+        foreach ($cols as $col) {
+            $name = $field_names[$f] . $l;
+            $html .= "<td><input name='$name' type='text' value='$col'></td>";
+            $f++;
+            if ($f > $maxf) {
+                $maxf = $f;
+            }
+        }
+        $html .= "</tr>";
+        $l++;
+    }
+    $html .= "<input type='hidden' name='nrows' value='" . $l . "'>\n";
+    return($html);
+}
+
+// Update the single field in a table
+// Reads the HTTP POST variable called $postname and checks if it is valid.
+// Applied a SQL update if the variable is valid. There can be up to two indexes
+function updatetextfield($table,$column,$post_name,$regex,$quot,$column1,$index1,$column2,$index2) {
+  $is_valid = false;
+	if (! array_key_exists($post_name,$_POST)) return($is_valid);
+	
+  if (preg_match($regex, $_POST[$post_name])) {
+    if ($quot) {
+      $query = sprintf('UPDATE %s SET %s="%s" WHERE %s=%d AND %s=%d',
+		       $table,$column,$_POST[$post_name],$column1,$index1,$column2,$index2);
+    } else {
+      $query = sprintf('UPDATE %s SET %s=%d WHERE %s=%d AND %s=%d',
+		       $table,$column,$_POST[$post_name],$column1,$index1,$column2,$index2);
+    }
+//	  print($query);
+    $result = mysql_query($query);
+    if ($result) {
+      $is_valid = true; //mysql_affected_rows() > 0;
+    } else {
+      $message  = 'Invalid query: ' . mysql_error() . "\n";
+      $message .= 'Whole query: ' . $query;
+      die($message);
+    }
+  }
+  return($is_valid);
+}
+
+// Update a whole column in a table. This iterates over all rows in a single column.
+// Error messages are stored in a hashtable for future use when displaying as text fields
+function updatetextinputs($table_name,$field_name,$regex,$quot,$row_id_name,$session_id,$error_messages,$error_message) {
+	if (! array_key_exists('nrows',$_POST)) return($error_messages);
+    $nrows = $_POST['nrows'];
+	for ($r=0; $r < $nrows; $r++) {
+        $post_name = $field_name . $r;
+		if (array_key_exists($row_id_name . $r,$_POST)) {
+			$row_id  = $_POST[$row_id_name . $r];
+			if (! updatetextfield($table_name,$field_name,$post_name,$regex,$quot,$row_id_name,$row_id,'session_id',$session_id)) {
+                $error_messages[$post_name] = $error_message;
+            }
+        }
+    }
+    return($error_messages);
+}
+
+
+
+
+
+
 ?>

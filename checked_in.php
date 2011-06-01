@@ -68,10 +68,11 @@ if (empty( $operator_id)) {
 
 <?php
 
-function list_collections($is_audit,$operator_id) {
+function list_collections($is_audit,$operator_id,$operator_code) {
     $collection_count = array();
 
-    $query = sprintf('SELECT collection.collection_id, count(session.session_id) AS session_count FROM collection LEFT JOIN session ON collection.collection_id=session.collection_id WHERE session.operator_id=%d',$operator_id);
+//    echo "OperatorId=" . $operator_id;
+    $query = sprintf('SELECT collection.collection_id AS collection_id, count(session.session_id) AS session_count FROM collection LEFT JOIN session ON collection.collection_id=session.collection_id WHERE session.operator_id=%d group by collection.collection_id',$operator_id);
 
     $result = mysql_query($query);
     if (!$result) {
@@ -81,7 +82,9 @@ function list_collections($is_audit,$operator_id) {
     }
 
     while ($row = mysql_fetch_assoc($result)) {
+        
         $collection_count[$row['collection_id']] = $row['session_count'];
+ //       echo '[ collection_id=' . $row['collection_id'] . ', session_count=' . $row['session_count'] .  ']';
     }
 
     $query = 'SELECT collection.collection_id, collection.scope, collection.allow_multiple_sessions, DATE_FORMAT(collection.start_date,"%e/%c/%Y") AS start_date, DATE_FORMAT(collection.end_date,"%e/%c/%Y") AS end_date, institution.title AS institution, module.title AS module FROM collection, institution, module WHERE collection.module_id = module.module_id AND collection.institution_id = institution.institution_id AND collection.visible=1 AND collection.is_audit=' . $is_audit;
@@ -104,6 +107,7 @@ function list_collections($is_audit,$operator_id) {
       echo '<td class="list">' . $row['module'] . '</td>';
       echo '<td class="list">' . $row['start_date'] . '</td>';
       echo '<td class="list">' . $row['end_date'] . '</td>';
+ //     echo "[ allow_multiple_sessions=" . $row['allow_multiple_sessions'] . ", collection_id=" . $row['collection_id'] . ", collection_count=" . $collection_count[$row['collection_id']] . "]";
       if (($row['allow_multiple_sessions']==1) or ($collection_count[$row['collection_id']]==0)) {
 
           echo '<td class="list" colspan="2" style="text-align: right;"><form method="POST" action="register_for_audit.php" class="list"><input type="hidden" name="collection_id" value="' . $row['collection_id'] . '" /><input type="hidden" name="operator_code" value="' . $operator_code . '" /><input type="hidden" name="operator_id" value="' . $operator_id . '" /><input class="list" name="comments" value="First attempt" style="width: 200px;" size="20"/> <button type="submit" class="list" style="width: 100px;">Register</button></form></td>';
@@ -128,7 +132,7 @@ function list_collections($is_audit,$operator_id) {
 <th class="list" style="width: 210px;">Session Comments</th>
 <th class="list" style="width: 100px;">Register</th>
 </tr>
-<?php list_collections(1,$operator_id); ?>
+<?php list_collections(1,$operator_id,$operator_code); ?>
 </table>
 
 <p>A list of current web based training collections</p>
@@ -142,7 +146,7 @@ function list_collections($is_audit,$operator_id) {
 <th class="list" style="width: 210px;">Session Comments</th>
 <th class="list" style="width: 100px;">Register</th>
 </tr>
-<?php list_collections(0,$operator_id); ?>
+<?php list_collections(0,$operator_id,$operator_code); ?>
 </table>
 
 

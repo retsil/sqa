@@ -49,7 +49,8 @@ $row = mysql_fetch_assoc($result);
   <div class="sqah1">&nbsp;</div>
 
 
-  <h2 class="sqa">MUGA data entry [ <a href="muga_study.php?session_code=<?php echo session_code(); ?>">Part 1</a> | Part 2 |
+
+  <h2 class="sqa">MUGA data entry [ <a href="muga_study.php?session_code=<?php echo session_code(); ?>">Part 1</a> | <span class="sqasel">Part 2</span> |
 <A href="../checked_in.php?session_code=<?php echo session_code(); ?>">Exit</a> ]</h2>
 
 <SPAN class="sqa">Enter data and click save below.</span>
@@ -229,6 +230,8 @@ $row = mysql_fetch_assoc($result);
   </FIELDSET>
 
    <div class="sqaf"><button type="submit" name="update" value="1">Save</button></div>
+
+  <div>Click on save and then exit using menu bar</div>
 
   </form>
 

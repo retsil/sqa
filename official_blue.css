@@ -156,7 +156,14 @@ border: thin solid grey;
 		      div.sqamenu {
 		
 			        float: right;
+
 			}
+
+        span.sqasel {
+				display: inline;
+                background-color: #001181;
+                color:#e0e0ff;
+        }
 		       span.sqamenu {
 				padding: .2em;
 				display: inline;

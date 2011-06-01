@@ -76,10 +76,15 @@ remove sessions. Export the audit as a table to access the entered data.</div>
 
 <?php
 
-//alter table collection add column ( allow_report int );
-//alter table collection add column ( allow_multiple_sessions int );
-//alter table collection add column ( allow_user_lock int );
-//alter table collection add column ( is_audit int );
+//alter table collection drop column  allow_report;
+//alter table collection drop column  allow_multiple_sessions;
+//alter table collection drop column  allow_user_lock;
+//alter table collection drop column  is_audit;
+
+//alter table collection add column ( allow_report int  default 0);
+//alter table collection add column ( allow_multiple_sessions int  default 0);
+//alter table collection add column ( allow_user_lock int default 1 );
+//alter table collection add column ( is_audit int default 1);
 
 $query = 'SELECT collection.collection_id, collection.scope, DATE_FORMAT(collection.start_date,"%e/%c/%Y") AS start_date, DATE_FORMAT(collection.end_date,"%e/%c/%Y") AS end_date, institution.title AS institution, institution.department AS department, module.title AS module, module.module_id, collection.is_audit, collection.visible, institution_auth.visible_priv FROM collection LEFT JOIN institution ON collection.institution_id = institution.institution_id LEFT JOIN institution_auth ON institution_auth.institution_id = institution.institution_id LEFT JOIN module ON collection.module_id = module.module_id WHERE institution_auth.manage_priv=1 AND institution_auth.moodle_id = ' . $moodle_id;
 $result = mysql_query($query);

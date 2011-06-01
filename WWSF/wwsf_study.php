@@ -71,6 +71,20 @@ if (empty( $study_id)) {
   <title>Data</title>
 </head>
 <body>
+
+<div class="sqamenu" style="text-align: right"><span class="sqamenu"><a href="../index.php">Welcome</a></span> <span class="sqamenu"><a href="../checked_in.php?session_code=<?php echo session_code(); ?>">Participate</a></span> <span class="sqamenu"><a href="../admin_audits.php">Administrate</a></span> <p>
+<span class="sqamenusel">WWSF</span></div>
+
+<h1 class="sqa">Software Quality Assurance</h1>
+  <div class="sqah1">&nbsp;</div>
+
+
+  <h2 class="sqa">WWSF data entry [ <a href="wwsf_data.php?session_code=<?php echo session_code(); ?>">Part 1</a> | <span class="sqasel">Part 2</span> |
+<A href="../checked_in.php?session_code=<?php echo session_code(); ?>">Exit</a> ]</h2>
+
+<p>Enter data and click save below.</p>
+
+
 <form action="wwsf_study.php?session_code=<?php echo session_code(); ?>" method="POST">
 
 <FIELDSET class="sqaf">
@@ -140,6 +154,9 @@ while($row = mysql_fetch_assoc($result)) {
 
 
 </form>
+
+
+  <div>Click on save and then exit using menu bar</div>
 
 </body>
 </html>
