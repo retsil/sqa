@@ -70,15 +70,18 @@ remove sessions. Export the audit as a table to access the entered data.</div>
 <th class="list">Start Date</th>
 <th class="list">End Date</th>
 <th class="list">Visible</th>
-<th class="list">Reports</th>
+<th class="list">Official audit</th>
 <th class="list">Open sessions</th>
 <th class="list">Export as sheets</th>
 
 <?php
 
-//alter table collection add column ( allow_report boolean );
+//alter table collection add column ( allow_report int );
+//alter table collection add column ( allow_multiple_sessions int );
+//alter table collection add column ( allow_user_lock int );
+//alter table collection add column ( is_audit int );
 
-$query = 'SELECT collection.collection_id, collection.scope, DATE_FORMAT(collection.start_date,"%e/%c/%Y") AS start_date, DATE_FORMAT(collection.end_date,"%e/%c/%Y") AS end_date, institution.title AS institution, institution.department AS department, module.title AS module, module.module_id, collection.allow_report, collection.visible, institution_auth.visible_priv FROM collection LEFT JOIN institution ON collection.institution_id = institution.institution_id LEFT JOIN institution_auth ON institution_auth.institution_id = institution.institution_id LEFT JOIN module ON collection.module_id = module.module_id WHERE institution_auth.manage_priv=1 AND institution_auth.moodle_id = ' . $moodle_id;
+$query = 'SELECT collection.collection_id, collection.scope, DATE_FORMAT(collection.start_date,"%e/%c/%Y") AS start_date, DATE_FORMAT(collection.end_date,"%e/%c/%Y") AS end_date, institution.title AS institution, institution.department AS department, module.title AS module, module.module_id, collection.is_audit, collection.visible, institution_auth.visible_priv FROM collection LEFT JOIN institution ON collection.institution_id = institution.institution_id LEFT JOIN institution_auth ON institution_auth.institution_id = institution.institution_id LEFT JOIN module ON collection.module_id = module.module_id WHERE institution_auth.manage_priv=1 AND institution_auth.moodle_id = ' . $moodle_id;
 $result = mysql_query($query);
 if (!$result) {
     $message  = 'Invalid query: ' . mysql_error() . "\n";
@@ -105,14 +108,10 @@ while ($row = mysql_fetch_assoc($result)) {
   echo '</td>';
 
   echo '<td class="list">';
-//  if ( $row['allow_report_priv'] ) {
-    echo '<form action="modify_audit.php" method="POST"><input type="hidden" name="collection_id" value="' .  $row['collection_id'] . '"/>';
-    if ($row['allow_report'] == 1) { echo '<input type="hidden" name="allow_report" value="0"/><button type="submit" class="list">Disallow</button>'; }
-    else  { echo '<input type="hidden" name="allow_report" value="1"/><button type="submit" class="list">Allow</button>'; }
-    echo '</form></td>';
-//  } else { 
-//    if ($row['allow_report'] == 1) { echo 'Showing'; } else { echo 'Hidden'; }
-//  }
+  echo '<form action="modify_audit.php" method="POST"><input type="hidden" name="collection_id" value="' .  $row['collection_id'] . '"/>';
+  if ($row['is_audit'] == 1) { echo '<input type="hidden" name="is_audit" value="0"/><button type="submit" class="list">No</button>'; }
+  else  { echo '<input type="hidden" name="is_audit" value="1"/><button type="submit" class="list">Yes</button>'; }
+  echo '</form></td>';
   echo '</td>';
 
   echo '<td class="list"><form action="admin_sessions.php"><input type="hidden" name="collection_id" value="' . $row['collection_id'] . '"/><button type="submit" class="list">Open</button></form></td>';

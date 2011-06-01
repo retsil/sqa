@@ -63,23 +63,107 @@ if (empty( $operator_id)) {
 
 <p>On first using this online audit tool, register below for one of the available audits.  This will open a Session, which you can come back to at a later date (without having to re-register).</p>
 
+<h2 class="sqa">Audits</h2>
+
+
+<?php
+
+function list_collections($is_audit,$operator_id) {
+    $collection_count = array();
+
+    $query = sprintf('SELECT collection.collection_id, count(session.session_id) AS session_count FROM collection LEFT JOIN session ON collection.collection_id=session.collection_id WHERE session.operator_id=%d',$operator_id);
+
+    $result = mysql_query($query);
+    if (!$result) {
+        $message  = 'Invalid query: ' . mysql_error() . "\n";
+        $message .= 'Whole query: ' . $query;
+        die($message);
+    }
+
+    while ($row = mysql_fetch_assoc($result)) {
+        $collection_count[$row['collection_id']] = $row['session_count'];
+    }
+
+    $query = 'SELECT collection.collection_id, collection.scope, collection.allow_multiple_sessions, DATE_FORMAT(collection.start_date,"%e/%c/%Y") AS start_date, DATE_FORMAT(collection.end_date,"%e/%c/%Y") AS end_date, institution.title AS institution, module.title AS module FROM collection, institution, module WHERE collection.module_id = module.module_id AND collection.institution_id = institution.institution_id AND collection.visible=1 AND collection.is_audit=' . $is_audit;
+    $result = mysql_query($query);
+    if (!$result) {
+        $message  = 'Invalid query: ' . mysql_error() . "\n";
+        $message .= 'Whole query: ' . $query;
+        die($message);
+    }
+
+    if (mysql_num_rows($result) == 0) {
+      echo '<tr><td style="text-align: center; font-style: italic;" colspan=7>There are no collections currently open.</td></tr>';
+     }
+    while ($row = mysql_fetch_assoc($result)) {
+
+
+      echo '<tr>';
+      echo '<td class="list">' . $row['scope'] . '</td>';
+      echo '<td class="list">' . $row['institution'] . '</td>';
+      echo '<td class="list">' . $row['module'] . '</td>';
+      echo '<td class="list">' . $row['start_date'] . '</td>';
+      echo '<td class="list">' . $row['end_date'] . '</td>';
+      if (($row['allow_multiple_sessions']==1) or ($collection_count[$row['collection_id']]==0)) {
+
+          echo '<td class="list" colspan="2" style="text-align: right;"><form method="POST" action="register_for_audit.php" class="list"><input type="hidden" name="collection_id" value="' . $row['collection_id'] . '" /><input type="hidden" name="operator_code" value="' . $operator_code . '" /><input type="hidden" name="operator_id" value="' . $operator_id . '" /><input class="list" name="comments" value="First attempt" style="width: 200px;" size="20"/> <button type="submit" class="list" style="width: 100px;">Register</button></form></td>';
+        } else {
+            echo '<td class="list" colspan="2">Already registered. Only one session allowed.</td>';
+        }    
+      echo '</tr>';
+    }
+    mysql_free_result($result);
+ }
+
+?>
+
+<p>A list of current web based software audits</p>
+<table class="list" width="80%">
+<tr>
+<th class="list">Scope</th>
+<th class="list">Institution</th>
+<th class="list">Dataset</th>
+<th class="list">Start Date</th>
+<th class="list">End Date</th>
+<th class="list" style="width: 210px;">Session Comments</th>
+<th class="list" style="width: 100px;">Register</th>
+</tr>
+<?php list_collections(1,$operator_id); ?>
+</table>
+
+<p>A list of current web based training collections</p>
+<table class="list" width="80%">
+<tr>
+<th class="list">Scope</th>
+<th class="list">Institution</th>
+<th class="list">Dataset</th>
+<th class="list">Start Date</th>
+<th class="list">End Date</th>
+<th class="list" style="width: 210px;">Session Comments</th>
+<th class="list" style="width: 100px;">Register</th>
+</tr>
+<?php list_collections(0,$operator_id); ?>
+</table>
+
+
 <h2 class="sqa">Sessions</h2>
 
 <p>A list of currently active sessions for entering audit data</p>
 
 <table class="list" width="80%">
 <tr>
+<th class="list">Type</th>
 <th class="list">Scope</th>
 <th class="list">Institution</th>
 <th class="list">Dataset</th>
 <th class="list">Opened On</th>
 <th class="list">End date</th> <!-- or verified -->
 <th class="list">Comments</th>
-<th class="list" colspan=2></th>
+<th class="list" colspan=3></th>
 </tr>
 
 <?php
-  $query = sprintf('SELECT session.session_code, session.comments, session.is_verified, collection.allow_report, collection.scope, DATE_FORMAT(session.registered,"%%e/%%c/%%Y") AS registered_date, DATE_FORMAT(collection.end_date,"%%e/%%c/%%Y") AS end_date, institution.title AS institution, module.title AS module, module.data_url, module.report_url FROM collection, institution, module, session WHERE collection.module_id = module.module_id AND collection.institution_id = institution.institution_id AND session.collection_id=collection.collection_id AND session.operator_id=%d',$operator_id);
+  $query = sprintf('SELECT session.session_code, session.comments, session.is_verified, collection.allow_report,  collection.allow_user_lock, collection.is_audit, collection.scope, DATE_FORMAT(session.registered,"%%e/%%c/%%Y") AS registered_date, DATE_FORMAT(collection.end_date,"%%e/%%c/%%Y") AS end_date, institution.title AS institution, module.title AS module, module.data_url, module.report_url FROM collection, institution, module, session WHERE collection.module_id = module.module_id AND collection.institution_id = institution.institution_id AND session.collection_id=collection.collection_id AND session.operator_id=%d',$operator_id);
 $result = mysql_query($query);
 if (!$result) {
     $message  = 'Invalid query: ' . mysql_error() . "\n";
@@ -93,6 +177,11 @@ if (mysql_num_rows($result) == 0) {
 
 while ($row = mysql_fetch_assoc($result)) {
   echo '<tr>';
+  if ( $row['is_audit'] ) {
+    echo '<td class="list">Audit</td>';
+  } else {
+    echo '<td class="list">Training</td>';
+  }
   echo '<td class="list">' . $row['scope'] . '</td>';
   echo '<td class="list">' . $row['institution'] . '</td>';
   echo '<td class="list">' . $row['module'] . '</td>';
@@ -104,57 +193,19 @@ while ($row = mysql_fetch_assoc($result)) {
   }
   echo '<td class="list">' . htmlspecialchars($row['comments']) . '</td>';
 
+    if (! $row['is_verified'] ) {
+        echo '<td class="list"><form method="get" action="' . $row['data_url'] . '" class="list"><input type="hidden" name="session_code" value="' . $row['session_code'] . '" /><button type="submit" class="list">Enter data</button></form></td>';
+        if ($row['allow_user_lock'] ) {
+            echo '<td class="list"><form method="get"  class="list" action="verify_my_session.php"><input type="hidden" name="session_code" value="' . $row['session_code'] . '"<input type="submit" value="Complete"></form></td>';
+        }
+    } else {
+        echo '<td></td><td></td>';
+    }
     if ($row['allow_report']) {
         echo '<td class="list"><form method="get" action="' . $row['report_url'] . '" class="list"><input type="hidden" name="session_code" value="' . $row['session_code'] . '" /><button type="submit" class="list">View results</button></form></td>';
     } else {
         echo '<td></td>';
     }
-    if (! $row['is_verified'] ) {
-        echo '<td class="list"><form method="get" action="' . $row['data_url'] . '" class="list"><input type="hidden" name="session_code" value="' . $row['session_code'] . '" /><button type="submit" class="list">Enter data</button></form></td>';
-    } else {
-        echo '<td></td>';
-    }
-  echo '</tr>';
-}
-
-mysql_free_result($result);
-
-?>
-</table>
-
-<h2 class="sqa">Audits</h2>
-
-<p>A list of current web based software audits</p>
-
-
-<table class="list" width="80%">
-<tr>
-<th class="list">Scope</th>
-<th class="list">Institution</th>
-<th class="list">Dataset</th>
-<th class="list">Start Date</th>
-<th class="list">End Date</th>
-<th class="list">Comments</th>
-</tr>
-
-<?php
-
-$query = 'SELECT collection.collection_id, collection.scope, DATE_FORMAT(collection.start_date,"%e/%c/%Y") AS start_date, DATE_FORMAT(collection.end_date,"%e/%c/%Y") AS end_date, institution.title AS institution, module.title AS module FROM collection, institution, module WHERE collection.module_id = module.module_id AND collection.institution_id = institution.institution_id AND collection.visible=1';
-$result = mysql_query($query);
-if (!$result) {
-    $message  = 'Invalid query: ' . mysql_error() . "\n";
-    $message .= 'Whole query: ' . $query;
-    die($message);
-}
-
-while ($row = mysql_fetch_assoc($result)) {
-  echo '<tr>';
-  echo '<td class="list">' . $row['scope'] . '</td>';
-  echo '<td class="list">' . $row['institution'] . '</td>';
-  echo '<td class="list">' . $row['module'] . '</td>';
-  echo '<td class="list">' . $row['start_date'] . '</td>';
-  echo '<td class="list">' . $row['end_date'] . '</td>';
-  echo '<td class="list"><form method="POST" action="register_for_audit.php" class="list"><input type="hidden" name="collection_id" value="' . $row['collection_id'] . '" /><input type="hidden" name="operator_code" value="' . $operator_code . '" /><input type="hidden" name="operator_id" value="' . $operator_id . '" /><input class="list" name="comments" value="" size=15/> <button type="submit" class="list">Register</button></form></td>';
   echo '</tr>';
 }
 

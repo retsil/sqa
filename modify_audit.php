@@ -61,10 +61,14 @@ if (array_key_exists('visible',$_POST)) {
     }
 }
 
-if (array_key_exists('allow_report',$_POST)) {
+if (array_key_exists('is_audit',$_POST)) {
 
-    $query = sprintf('UPDATE collection SET allow_report=%d WHERE collection_id=%d',$_POST['allow_report']=='1',$collection_id);
+    if ($_POST['is_audit'] == '1') {
+        $query = sprintf('UPDATE collection SET allow_report=0, allow_user_lock=1, allow_multiple_sessions=0, is_audit=1 WHERE collection_id=%d',$collection_id);
+    } else {
+        $query = sprintf('UPDATE collection SET allow_report=1, allow_user_lock=0, allow_multiple_sessions=1, is_audit=0 WHERE collection_id=%d',$collection_id);
 
+    }
     $result = mysql_query($query);
     if (!$result) {
         $message  = 'Invalid query: ' . mysql_error() . "\n";
