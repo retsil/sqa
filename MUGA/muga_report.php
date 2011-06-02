@@ -39,7 +39,8 @@ function column_range($table, $column, $collection_id) {
 function study_stats($table, $column, $study_id, $session_id, $collection_id) {
 	  $stats = array();
 
-	  $query = sprintf('SELECT avg(%s) AS avg, stddev(%s) AS stddev, max(%s) AS max, min(%s) AS min FROM %s, session WHERE study_id=%d AND is_valid=1 AND session.session_id=muga_data.session_id AND session.collection_id=%d', $column, $column, $column, $column, $table, $study_id, $collection_id);
+	 // All locked entries in the collection
+	  $query = sprintf('SELECT avg(%s) AS avg, stddev(%s) AS stddev, max(%s) AS max, min(%s) AS min FROM %s, session WHERE study_id=%d AND is_valid=1 AND session.is_verified=1 AND session.session_id=muga_data.session_id AND session.collection_id=%d', $column, $column, $column, $column, $table, $study_id, $collection_id);
 	  $result = my_query($query);
 	  $row = mysql_fetch_assoc($result);
 	  $stats['avg'] = $row['avg'];
@@ -47,6 +48,7 @@ function study_stats($table, $column, $study_id, $session_id, $collection_id) {
 	  $stats['min'] = $row['min'];
 	  $stats['max'] = $row['max'];
 	  
+	// Your session value
 	  $query = sprintf('SELECT %s AS value FROM %s, session WHERE study_id=%d AND is_valid=1 AND session.session_id=muga_data.session_id AND muga_data.session_id=%d', $column, $table, $study_id, $session_id);
 	  $result = my_query($query);
 	  $row = mysql_fetch_assoc($result);

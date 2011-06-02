@@ -59,8 +59,21 @@ if ($row = mysql_fetch_assoc($result)) {
   die('Operator not inserted');
  }
  
+	
+if ($_POST['email_back']=='Notify') {
+	$headers = 'From: Robert.Barnett@swahs.health.nsw.gov.au' . "\r\n";
+	$email = $_POST['email_address'];
+	$text = '';
+	$text .= 'An operator code has been created for you be the ANZSNM software quality assurance website. ' . "\r\n";
+	$text .= 'Your operator code is  ' . $operator_code . "\r\n";
+	$text .= 'You can use your code to anonymously participate in software audits at http://apps.anzsnm.org.au/sqa/' . "\r\n";
+	$text .= ''. "\r\n";
+	$text .= 'This is an automated alert. Inform the sender if this was sent in error.'. "\r\n";
+	if (! mail($email,'ANZSNM SQA Operator Code',$text,$headers)) die("Could not send email");
+}		
+		
 setcookie ( 'operator_code', $operator_code, time()+60*60*24*30);
- 
+
 require('checked_in.php');
 return;
 

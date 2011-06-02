@@ -68,6 +68,14 @@ if (empty( $study_id)) {
    	<style type="text/css" title="currentStyle" media="screen">
 		@import "../official_blue.css";
 	</style>
+	<style>
+	input#invalid {
+		background-color: rgb(255,230,230);
+	}
+	span#invalid {
+		background-color: rgb(255,230,230);
+	}
+	</style>
   <title>Data</title>
 </head>
 <body>
@@ -90,67 +98,77 @@ if (empty( $study_id)) {
 <FIELDSET class="sqaf">
   <LEGEND class="sqaf">Results of Analysis</LEGEND>
 
-<?php 
 
-$query = sprintf('SELECT uptake_right, uptake_left FROM wwsf_data WHERE session_id=%d AND study_id=%d',$session_id,$study_id);
-
-$result = my_query($query);
-
-$row = mysql_fetch_assoc($result)
-?>
-
- <DIV class="sqaf">
-	<SPAN class="sqaf">Study ID:</SPAN>
-  	<INPUT name="study_id" size="4" type="hidden" value="<?php echo $study_id; ?>" tabindex="0" /><?php echo $study_id; ?>
- </DIV>
- <DIV class="sqaf">
-  <SPAN class="sqaf">Right Uptake (%):</SPAN>
-  	<INPUT name="uptake_right" size="4" type="text" value="<?php echo $row['uptake_right']; ?>" tabindex="1" />
-  </DIV>
- <DIV class="sqaf">
-  <SPAN class="sqaf">Left Uptake (%):</SPAN>
-  	<INPUT name="uptake_left" size="4" type="text" value="<?php echo $row['uptake_left']; ?>" tabindex="1" />
-  </DIV>
- <DIV class="sqaf">
-  <input type="submit" name="navigate" value="previous" tabindex="6">
-  <input type="submit" name="navigate" value="next" tabindex="7">
-  </DIV>
-
-<table class="list">
+<table cellspacing="0" cellpadding="0">
 <tr>
+<th>Study,</th>
+<th>Right Uptake (%),</th>
+<th>Left Uptake (%),</th>
+</tr>
+
 <?php
-mysql_free_result($result);
 
- $query = sprintf('SELECT study_id, is_valid FROM wwsf_data WHERE session_id=%d',$session_id);
+$error_messages = array();
+
+$table_name = 'wwsf_data';
+
+$field_names = array('uptake_left','uptake_right');
+$hidden_field_names = array('study_id');
+$all_field_names = array_merge($hidden_field_names,$field_names);
 
 
-$result = my_query($query);
+if ($_POST['rm'] == 'CSV') {
+    // Create a CVS text area
+    echo "<tr><td colspan='" . count($all_field_names) . "'>";
+    echo implodeintotextarea($all_field_names);
+    echo "</td></tr>";
+} else if ($_POST['rm'] == 'Table') {
+    // Create a Table (which needs to be saved)
+    echo explodeintotexttable($all_field_names);
+    echo "<tr><td colspan='" . count($all_field_names) . "'><span id='invalid'>Table is not saved</span><td></tr>";
+} else {
+    // Create a table based on SQL query
 
+     $error_messages = updatetextinputs($table_name,'uptake_right','/^\d+$/',false,'study_id',$session_id,$error_messages,"Must be an integer");
+     $error_messages = updatetextinputs($table_name,'uptake_left','/^\d+$/',false,'study_id',$session_id,$error_messages,"Must be an integer");
 
-while($row = mysql_fetch_assoc($result)) {
-  $style = '';
-  if ($row['study_id'] == $study_id) {
-    $style .= "background:  #001181; color: #e0e0ff;";
-  } else {
-    $style .= "color:  #001181; background-color: #e0e0ff;";
-  }
-  if (! $row['is_valid']) {
-    $style .= "border: thin solid red;";
-  } else {
-    $style .= "border: thin solid gray;";
-  }
-  echo '<td class="list">' . 
-    '<input name="navigate" style="' . $style . 
-    '"type="submit" value="' . $row['study_id'] . 
-    '">' . '</td>';
+    $query = sprintf('SELECT study_id, uptake_left, uptake_right FROM wwsf_data WHERE session_id=%d',$session_id);
+    $select_result = my_query($query);
+    echo explodeintotextinputs($field_names,$hidden_field_names,$select_result,$error_messages);
+    $count_errors = count($error_messages);
+    
+    if ($count_errors==0) {
+        $query = sprintf('UPDATE ' . $table_name . ' SET is_valid=1 WHERE session_id=%d',$session_id);
+    } else {
+        $query = sprintf('UPDATE ' . $table_name . ' SET is_valid=0 WHERE session_id=%d',$session_id);
+    }
+    $result = my_query($query);
 }
 
-
 ?>
-</tr>
+
 </table>
 
 </FIELDSET>
+
+
+<?php
+
+
+if ($count_errors > 0) {
+    echo "<span id='invalid'>" . $count_errors . " invalid fields</span>";
+}
+?>
+
+
+<?php if ($_POST['rm'] == 'CSV') {
+    echo "<button name='rm' type='submit' value='Table'>Convert to table</button>"; 
+} else {
+    echo "<button name='rm' type='submit' value='CSV'>Convert to CSV</button>"; 
+    echo "<button name='rm' type='submit' value='Save'>Save</button>";
+}
+?>
+
 
 
 </form>

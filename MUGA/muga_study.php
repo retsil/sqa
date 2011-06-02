@@ -103,6 +103,13 @@ if ($_POST['rm'] == 'CSV') {
     $select_result = my_query($query);
     echo explodeintotextinputs($field_names,$hidden_field_names,$select_result,$error_messages);
     $count_errors = count($error_messages);
+    
+    if ($count_errors==0) {
+        $query = sprintf('UPDATE ' . $table_name . ' SET is_valid=1 WHERE session_id=%d',$session_id);
+    } else {
+        $query = sprintf('UPDATE ' . $table_name . ' SET is_valid=0 WHERE session_id=%d',$session_id);
+    }
+    $result = my_query($query);
 }
 
 ?>

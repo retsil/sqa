@@ -137,6 +137,21 @@ border: thin solid grey;
         BUTTON.list {
                 font: normal .9em arial, sans-serif;
         }
+        BUTTON.list_inactive {
+                color:#000000;
+                background-color: #e0e0ff;
+                font: normal .9em arial, sans-serif;
+        }
+        BUTTON.list_active {
+                color:#e0e0ff;
+                background-color: #001181;
+                font: normal .9em arial, sans-serif;
+        }
+        FORM.toggle {
+	        display: inline;
+                margin: 3;
+                padding: 0;
+        }
         FORM.list {
 	        display: inline;
                 margin: 0;

@@ -61,9 +61,9 @@ if (empty( $operator_id)) {
   <form action="checked_out.php"><span class="sqaopf">Operator code: <span class="sqaop"><?php echo $operator_code; ?></span>
 	  <button type="submit">Check out</button></span></form>
 
-<p>On first using this online audit tool, register below for one of the available audits.  This will open a Session, which you can come back to at a later date (without having to re-register).</p>
+<p>On first using this online audit tool, register below for one of the available audits.  This will open a session, which you can come back to at a later date (without having to re-register).</p>
 
-<h2 class="sqa">Audits</h2>
+<h2 class="sqa">Training/Audits</h2>
 
 
 <?php
@@ -121,21 +121,7 @@ function list_collections($is_audit,$operator_id,$operator_code) {
 
 ?>
 
-<p>A list of current web based software audits</p>
-<table class="list" width="80%">
-<tr>
-<th class="list">Scope</th>
-<th class="list">Institution</th>
-<th class="list">Dataset</th>
-<th class="list">Start Date</th>
-<th class="list">End Date</th>
-<th class="list" style="width: 210px;">Session Comments</th>
-<th class="list" style="width: 100px;">Register</th>
-</tr>
-<?php list_collections(1,$operator_id,$operator_code); ?>
-</table>
-
-<p>A list of current web based training collections</p>
+<p>A list of current <b>training results</b>. Register to enter your own results and review it in comparison to the training results.</p>
 <table class="list" width="80%">
 <tr>
 <th class="list">Scope</th>
@@ -149,10 +135,24 @@ function list_collections($is_audit,$operator_id,$operator_code) {
 <?php list_collections(0,$operator_id,$operator_code); ?>
 </table>
 
+<p>A list of current <b>offical audits</b>. Register to enter your own results, but you will not be able to review your performance until after the audit has completed.</p>
+<table class="list" width="80%">
+<tr>
+<th class="list">Scope</th>
+<th class="list">Institution</th>
+<th class="list">Dataset</th>
+<th class="list">Start Date</th>
+<th class="list">End Date</th>
+<th class="list" style="width: 210px;">Session Comments</th>
+<th class="list" style="width: 100px;">Register</th>
+</tr>
+<?php list_collections(1,$operator_id,$operator_code); ?>
+</table>
+
 
 <h2 class="sqa">Sessions</h2>
 
-<p>A list of currently active sessions for entering audit data</p>
+<p>A list of currently active sessions for entering audit or training purposes.</p>
 
 <table class="list" width="80%">
 <tr>

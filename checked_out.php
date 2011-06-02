@@ -16,7 +16,19 @@ if (! mysql_select_db($db_database)) {
 		@import "official_blue.css";
 	</style>
   <title>Checked out</title>
+<script type="text/javascript" language="JavaScript">
+function emailempty()
+{
+        if (( document.new_operator.email_address.value == '') & (document.new_operator.email_back.checked ))
+        {
+                alert('If you do not enter an email address then we can not email your operator code.');
+                document.new_operator.email_back.checked=0;
+                return false;
+        }
+}
+</script>
 </head>
+
 <body>
 
 
@@ -54,7 +66,7 @@ if ( $operator_code_error != '') {
   <div class="sqap">Check in as a new operator. (ie. if you don&#39;t have an operator code). Remembering your operator code is important for some audits. You may enter your details below if you want to. Your details are kept for recovery purposes only.
 </div>
 
-<FORM action="new_operator.php" METHOD="POST">
+<FORM name="new_operator" action="new_operator.php" METHOD="POST" onSubmit="return emailempty();">
 <FIELDSET class="sqaf">
   <LEGEND class="sqaf">Optional Details</LEGEND>
   <DIV class="sqaf">
@@ -62,8 +74,12 @@ if ( $operator_code_error != '') {
 	<INPUT name="full_name" size="30" type="text" value="" tabindex="0"/>
   </DIV>
   <DIV class="sqaf">
-	<SPAN class="sqaf">Email Address:</SPAN>
-	<INPUT name="email_address" size="30" type="text" value="" tabindex="1"/>
+	<SPAN class="sqaf"><b>Email Address:</b></SPAN>
+	<INPUT id="email_address" name="email_address" size="30" type="text" value="" tabindex="1"/>
+  </DIV>
+  <DIV class="sqaf">
+	<SPAN class="sqaf"><b>Notify</b> me by email of my operator code:</SPAN>
+	<INPUT name="email_back" type="checkbox" value="Notify" checked tabindex="1"/> 
   </DIV>
   <DIV class="sqaf">
 	<SPAN class="sqaf">Phone Number:</SPAN>
@@ -75,10 +91,6 @@ if ( $operator_code_error != '') {
                <option value="0">Not listed</option>
                <option value="1">Westmead Hospital, Medical Physics</option>
         </SELECT>
-  </DIV>
-  <DIV class="sqaf">
-	<SPAN class="sqaf">Notify me by email of my operator code:</SPAN>
-	<INPUT name="email_back" type="checkbox" value="Notify" tabindex="1"/> 
   </DIV>
 </FIELDSET>
 <p>
