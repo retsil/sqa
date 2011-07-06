@@ -20,11 +20,16 @@ require_once('moodle.inc');
 
 <div class="sqamenu"><span class="sqamenu"><a href="index.php">Welcome</a></span> <span class="sqamenu"><a href="checked_out.php">Participate</a></span> <span class="sqamenusel">Administrate</span></div>
 
+
 <h1 class="sqa">Software Quality Assurance</h1>
   <div class="sqah1">&nbsp;</div>
 
-  <h2 class="sqa"><?php echo "<a href=\"" . $CFG->wwwroot . "\">"; ?>Moodle</a> login</h2>
 
+<h2 class="sqa">Administrate audits</h2>
+
+<!--
+  <h2 class="sqa"><?php echo "<a href=\"" . $CFG->wwwroot . "\">"; ?>Moodle</a> login</h2>
+-->
 
 <?php 
 
@@ -51,9 +56,7 @@ if (! mysql_select_db($db_database)) {
 
 ?>
 
-<h2 class="sqa">Administrate audits</h2>
-
-<div class="sqap">A list of web based software audits which you manage. Open the audit to add and
+<div class="sqap">The following is a list of web based software audits which you currently manage. Open the audit to add and
 remove sessions. Export the audit as a table to access the entered data.</div>
 
 <?php

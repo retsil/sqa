@@ -29,6 +29,11 @@ if (! mysql_select_db($db_database)) {
 
 
 <h2 class="sqa">Introduction</h2>
+
+<div class="sqap">
+It is important that clinical software is evaluated to ensure both its accuracy and reproducibility.  Software audits are used for benchmarking against National standards, internal validation of new software releases and training of operators within a site
+</div>
+
 <div class="sqap">
 The ANZSNM software quality assurance site allows users to:
 <ul>
@@ -128,7 +133,7 @@ To participate in an official audit contact the person running the audit and giv
 
 <dt class="sqap">Training</dt>
 <dd class="sqap">
-  For the training datasets, participants are provided with instant reports comparing their data with the &quot;running average&quot; currently on the database (obtained from a previous audit). 
+For the training datasets, participants are provided with instant reports comparing their data with the results in the (previous audit) database.
 </dd>
 </div>
 
@@ -145,8 +150,8 @@ You can initiate a new software audit (using the available online datasets) by l
 <dt class="sqap">NOTE:</dt>
 <dd class="sqap">
 <ol>
-<li>avoid requesting new audits which have the same scope as existing audits
-<li>Individual results in audit mode are not publicly available on this site and the dissemination of results remains the responsibility of the administrator of the audit
+<li>Avoid requesting new audits which have the same scope as existing audits.
+<li>Individual results in audit mode are not publicly available on this site and the dissemination of results remains the responsibility of the administrator of the audit.
 </ol>
 </dd>
 </dl>

@@ -102,15 +102,12 @@ function list_collections($is_audit,$operator_id,$operator_code) {
 
 
       echo '<tr>';
-      echo '<td class="list">' . $row['scope'] . '</td>';
-      echo '<td class="list">' . $row['institution'] . '</td>';
       echo '<td class="list">' . $row['module'] . '</td>';
-      echo '<td class="list">' . $row['start_date'] . '</td>';
-      echo '<td class="list">' . $row['end_date'] . '</td>';
+      echo '<td class="list">' . $row['scope'] . '</td>';
  //     echo "[ allow_multiple_sessions=" . $row['allow_multiple_sessions'] . ", collection_id=" . $row['collection_id'] . ", collection_count=" . $collection_count[$row['collection_id']] . "]";
       if (($row['allow_multiple_sessions']==1) or ($collection_count[$row['collection_id']]==0)) {
 
-          echo '<td class="list" colspan="2" style="text-align: right;"><form method="POST" action="register_for_audit.php" class="list"><input type="hidden" name="collection_id" value="' . $row['collection_id'] . '" /><input type="hidden" name="operator_code" value="' . $operator_code . '" /><input type="hidden" name="operator_id" value="' . $operator_id . '" /><input class="list" name="comments" value="First attempt" style="width: 200px;" size="20"/> <button type="submit" class="list" style="width: 100px;">Register</button></form></td>';
+          echo '<td class="list" colspan="2" style="text-align: right;"><form method="POST" action="register_for_audit.php" class="list"><input type="hidden" name="collection_id" value="' . $row['collection_id'] . '" /><input type="hidden" name="operator_code" value="' . $operator_code . '" /><input type="hidden" name="operator_id" value="' . $operator_id . '" /><input class="list" name="comments" value="" style="width: 200px;" size="20"/> <button type="submit" class="list" style="width: 100px;">Register</button></form></td>';
         } else {
             echo '<td class="list" colspan="2">Already registered. Only one session allowed.</td>';
         }    
@@ -121,28 +118,22 @@ function list_collections($is_audit,$operator_id,$operator_code) {
 
 ?>
 
-<p>A list of current <b>training results</b>. Register to enter your own results and review it in comparison to the training results.</p>
+<p>Following is a list of (completed) audits that can be used for <b>training purposes</b>. Register to enter your own results for direct comparison with the audit results.</p>
 <table class="list" width="80%">
 <tr>
-<th class="list">Scope</th>
-<th class="list">Institution</th>
 <th class="list">Dataset</th>
-<th class="list">Start Date</th>
-<th class="list">End Date</th>
+<th class="list">Audit Name</th>
 <th class="list" style="width: 210px;">Session Comments</th>
 <th class="list" style="width: 100px;">Register</th>
 </tr>
 <?php list_collections(0,$operator_id,$operator_code); ?>
 </table>
 
-<p>A list of current <b>offical audits</b>. Register to enter your own results, but you will not be able to review your performance until after the audit has completed.</p>
+<p>Following is a list of current <b>official audits</b>. Register to enter your own results.  Note: You will not be able to review your performance until after the audit has been completed.</p>
 <table class="list" width="80%">
 <tr>
-<th class="list">Scope</th>
-<th class="list">Institution</th>
 <th class="list">Dataset</th>
-<th class="list">Start Date</th>
-<th class="list">End Date</th>
+<th class="list">Audit Name</th>
 <th class="list" style="width: 210px;">Session Comments</th>
 <th class="list" style="width: 100px;">Register</th>
 </tr>
@@ -152,15 +143,14 @@ function list_collections($is_audit,$operator_id,$operator_code) {
 
 <h2 class="sqa">Sessions</h2>
 
-<p>A list of currently active sessions for entering audit or training purposes.</p>
+<p>Following is a list of sessions for entering audit/training data that are currently active.</p>
 
 <table class="list" width="80%">
 <tr>
 <th class="list">Type</th>
-<th class="list">Scope</th>
-<th class="list">Institution</th>
 <th class="list">Dataset</th>
-<th class="list">Opened On</th>
+<th class="list">Audit Name</th>
+<th class="list">First Opened On</th>
 <th class="list">End date</th> <!-- or verified -->
 <th class="list">Comments</th>
 <th class="list" colspan=3></th>
@@ -186,9 +176,8 @@ while ($row = mysql_fetch_assoc($result)) {
   } else {
     echo '<td class="list">Training</td>';
   }
-  echo '<td class="list">' . $row['scope'] . '</td>';
-  echo '<td class="list">' . $row['institution'] . '</td>';
   echo '<td class="list">' . $row['module'] . '</td>';
+  echo '<td class="list">' . $row['scope'] . '</td>';
   echo '<td class="list">' . $row['registered_date'] . '</td>';
   if ( $row['is_verified'] ) {
     echo '<td class="list">Locked</td>';
