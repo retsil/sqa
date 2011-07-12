@@ -12,7 +12,10 @@
 <body>
 
 
-<div class="sqamenu"><span class="sqamenusel">Welcome</span> <span class="sqamenu"><a href="../checked_out.php">Participate</a></span> <span class="sqamenu"><a href="../admin_audits.php">Administrate</a></span></div>
+
+
+<div class="sqamenu" style="text-align: right"><span class="sqamenu"><a href="../index.php">Welcome</a></span> <span class="sqamenu"><a href="../checked_out.php">Participate</a></span> <span class="sqamenu"><a href="../admin_audits.php">Administrate</a></span> <p>
+<span class="sqamenusel">WWSF</span></div>
 
 
 <h1 class="sqa">Software Quality Assurance</h1>

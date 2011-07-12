@@ -63,8 +63,7 @@ if (empty( $operator_id)) {
 
 <p>On first using this online audit tool, register below for one of the available audits.  This will open a session, which you can come back to at a later date (without having to re-register).</p>
 
-<h2 class="sqa">Training/Audits</h2>
-
+<h2 class="sqa">Training</h2>
 
 <?php
 
@@ -128,6 +127,9 @@ function list_collections($is_audit,$operator_id,$operator_code) {
 </tr>
 <?php list_collections(0,$operator_id,$operator_code); ?>
 </table>
+
+
+<h2 class="sqa">Official Audits</h2>
 
 <p>Following is a list of current <b>official audits</b>. Register to enter your own results.  Note: You will not be able to review your performance until after the audit has been completed.</p>
 <table class="list" width="80%">

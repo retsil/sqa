@@ -36,7 +36,7 @@ $session_id = check_session(-1);
 
 
 <div class="sqamenu" style="text-align: right"><span class="sqamenu"><a href="../index.php">Welcome</a></span> <span class="sqamenu"><a href="../checked_in.php?session_code=<?php echo session_code(); ?>">Participate</a></span> <span class="sqamenu"><a href="../admin_audits.php">Administrate</a></span> <p>
-<span class="sqamenusel">MUGA</span></div>
+<span class="sqamenusel">GPBS</span></div>
 
 
 <h1 class="sqa">Software Quality Assurance</h1>
@@ -46,7 +46,7 @@ $session_id = check_session(-1);
 
 
 <?php
-if ($_POST['rm'] == 'CSV') {
+if (isset($_POST['rm_csv'])) {
     echo "<SPAN class='sqa'>All studies are combined below into comma delimited text. Enter all data (including Study ID) and convert into a table.</span>"; 
 } else {
     echo "<SPAN class='sqa'>Enter data and click save below.</span>"; 
@@ -82,12 +82,12 @@ $field_names = array('lvef','end_diastolic_frame_number','end_systolic_frame_num
 $hidden_field_names = array('study_id');
 $all_field_names = array_merge($hidden_field_names,$field_names);
 
-if ($_POST['rm'] == 'CSV') {
+if (isset($_POST['rm_csv'])) {
     // Create a CVS text area
     echo "<tr><td colspan='" . count($all_field_names) . "'>";
     echo implodeintotextarea($all_field_names);
     echo "</td></tr>";
-} else if ($_POST['rm'] == 'Table') {
+} else if (isset($_POST['rm_table'])) {
     // Create a Table (which needs to be saved)
     echo explodeintotexttable($all_field_names);
     echo "<tr><td colspan='" . count($all_field_names) . "'><span id='invalid'>Table is not saved</span><td></tr>";
@@ -129,11 +129,11 @@ if ($count_errors > 0) {
 ?>
 
 
-<?php if ($_POST['rm'] == 'CSV') {
-    echo "<button name='rm' type='submit' value='Table'>Convert to table</button>"; 
+<?php if (isset($_POST['rm_csv'])) {
+    echo "<input name='rm_table' type='submit' value='Convert to table'></input>"; 
 } else {
-    echo "<button name='rm' type='submit' value='CSV'>Convert to CSV</button>"; 
-    echo "<button name='rm' type='submit' value='Save'>Save</button>";
+    echo "<input name='rm_csv' type='submit' value='Convert to CSV'></input>"; 
+    echo "<input name='rm_save' type='submit' value='Save'></input>";
     echo "<div>Click on save and proceed to part 2 using menu bar</div>";
 }
 ?>

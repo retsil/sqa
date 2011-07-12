@@ -107,8 +107,8 @@ while ($row = mysql_fetch_assoc($result)) {
   echo '<td class="list">';
   if ( $row['visible_priv'] ) {
     echo '<form action="modify_audit.php" class="toggle" method="POST"><input type="hidden" name="collection_id" value="' .  $row['collection_id'] . '"/>';
-	  if ($row['visible'] == 1) { echo '<input type="hidden" name="visible" value="0"/><button disabled=1 class="list_active">Y</button><button type="submit" class="list_inactive">N</button>'; }
-    else  { echo '<input type="hidden" name="visible" value="1"/><button class="list_inactive">Y</button><button disabled=1 type="submit" class="list_active">N</button>'; }
+	  if ($row['visible'] == 1) { echo '<input type="hidden" name="visible" value="0"/><button disabled=1 class="list_active">Y</button><input type="submit" class="list_inactive" value="N"></input>'; }
+    else  { echo '<input type="hidden" name="visible" value="1"/><input type="submit" class="list_inactive" value="Y"></input><button disabled=1 type="submit" class="list_active">N</button>'; }
     echo '</form></td>';
   } else { 
     if ($row['visible'] == 1) { echo 'Showing'; } else { echo 'Hidden'; }
@@ -118,8 +118,8 @@ while ($row = mysql_fetch_assoc($result)) {
   echo '<td class="list">';
 	echo '<form action="modify_audit.php" class="toggle" method="POST"><input type="hidden" name="collection_id" value="' .  $row['collection_id'] . '"/>';
 
-	if ($row['is_audit'] == 1) { echo '<input type="hidden" name="is_audit" value="0"/><button disabled=1 class="list_active">Y</button><button type="submit" class="list_inactive">N</button>'; }
-    else  { echo '<input type="hidden" name="is_audit" value="1"/><button class="list_inactive">Y</button><button disabled=1 type="submit" class="list_active">N</button>'; }
+	if ($row['is_audit'] == 1) { echo '<input type="hidden" name="is_audit" value="0"/><button disabled=1 class="list_active">Y</button><input type="submit" class="list_inactive" value="N"></input>'; }
+    else  { echo '<input type="hidden" name="is_audit" value="1"/><input class="list_inactive" type="submit" value="Y"></input><button disabled=1 type="submit" class="list_active">N</button>'; }
 	
   echo '</form></td>';
   echo '</td>';

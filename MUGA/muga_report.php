@@ -19,7 +19,7 @@ $session_id = check_session(-1);
    	<style type="text/css" title="currentStyle" media="screen">
 		@import "../official_blue.css";
 	</style>
-  <title>MUGA Data Report</title>
+  <title>GBPS Data Report</title>
 </head>
 <body>
 
@@ -339,6 +339,9 @@ $field = 'lvef';
 //}
 
 ?>
+
+<!--
+
 <br clear="all">
 <hr>
 
@@ -430,6 +433,8 @@ $session_stats = session_stats('muga_session','smoothing_type',$values,false,$se
 tabulate_stats($values,$stats,$session_stats);
 ?>
   </div>
+
+-->
 
 <?php
   echo '<h2 class="sqa">[ <A href="../checked_in.php?session_code=' . session_code() . '">Exit</a> ]</h2>';

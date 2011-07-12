@@ -43,14 +43,14 @@ $row = mysql_fetch_assoc($result);
 ?>
 
 <div class="sqamenu" style="text-align: right"><span class="sqamenu"><a href="../index.php">Welcome</a></span> <span class="sqamenu"><a href="../checked_in.php?session_code=<?php echo session_code(); ?>">Participate</a></span> <span class="sqamenu"><a href="../admin_audits.php">Administrate</a></span> <p>
-<span class="sqamenusel">MUGA</span></div>
+<span class="sqamenusel">GBPS</span></div>
 
 <h1 class="sqa">Software Quality Assurance</h1>
   <div class="sqah1">&nbsp;</div>
 
 
 
-  <h2 class="sqa">MUGA data entry [ <a href="muga_study.php?session_code=<?php echo session_code(); ?>">Part 1</a> | <span class="sqasel">Part 2</span> |
+  <h2 class="sqa">GBPS data entry [ <a href="muga_study.php?session_code=<?php echo session_code(); ?>">Part 1</a> | <span class="sqasel">Part 2</span> |
 <A href="../checked_in.php?session_code=<?php echo session_code(); ?>">Exit</a> ]</h2>
 
 <SPAN class="sqa">Enter data and click save below.</span>
@@ -101,7 +101,7 @@ $row = mysql_fetch_assoc($result);
 
   ?>
   <DIV class="sqaf">
-  <SPAN class="sqaf">How long have you been processing MUGA scans?</SPAN>
+  <SPAN class="sqaf">How long have you been processing GBPS scans?</SPAN>
   <div style="margin-left: 3em;">
   <?php update_radio_input('muga_session','operator_experience_in_months',
 			   array('0' => 'less than 6 months', '6' => '6 months to 1 year', '12' => 'longer than 1 year'),false,'session_id',$session_id,$row);  ?>
